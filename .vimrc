@@ -34,7 +34,7 @@ set expandtab
 filetype plugin on
 filetype indent on
 
-set list listchars=tab:\ \ ,trail:·
+"set list listchars=tab:\ \ ,trail:·
 
 set nowrap       "Don't wrap lines
 set linebreak    "Wrap lines at convenient points
@@ -91,8 +91,12 @@ vnoremap <C-h> ""y:%s/<C-R>=escape(@", '/\')<CR>//g<Left><Left>
 " }}}
 " Bundles {{{
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+"set rtp+=~/.vim/bundle/Vundle.vim
+"call vundle#begin()
+set rtp+=~/vimfiles/bundle/Vundle.vim/
+let path='~/vimfiles/bundle'
+call vundle#begin(path)
+
 Plugin 'gmarik/Vundle.vim'
 
 " colorscheme {{{
