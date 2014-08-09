@@ -1,7 +1,27 @@
 " vim:fdm=marker
 
-" Basic {{{
 set nocompatible
+
+" Identify platform {{{
+silent function! OSX()
+    return has('macunix')
+endfunction
+silent function! LINUX()
+    return has('unix') && !has('macunix') && !has('win32unix')
+endfunction
+silent function! WINDOWS()
+    return  (has('win16') || has('win32') || has('win64'))
+endfunction
+" }}}
+" Windows Compatible {{{
+" On Windows, also use '.vim' instead of 'vimfiles'; this makes synchronization
+" across (heterogeneous) systems easier.
+if WINDOWS()
+  "set runtimepath=$HOME/vimfiles,$VIMRUNTIME
+  set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME
+endif
+" }}}
+" Basic {{{
 set number                      "Line numbers are good
 " set relativenumber              "relative numbering
 set backspace=indent,eol,start  "Allow backspace in insert mode
@@ -17,6 +37,8 @@ set hidden
 syntax on
 set spell
 let mapleader=","
+scriptencoding utf-8
+set encoding=utf-8
 
 "Swap files
 set noswapfile
@@ -34,23 +56,26 @@ set expandtab
 filetype plugin on
 filetype indent on
 
-"set list listchars=tab:\ \ ,trail:·
+set list listchars=tab:\ \ ,trail:·
 
 set nowrap       "Don't wrap lines
 set linebreak    "Wrap lines at convenient points
 
-set foldnestmax=8
+set foldnestmax=15
 set foldenable
 set foldminlines=2
 "set foldlevel=20
 set foldlevelstart=20
 
 " save view after leaving window and restore it
+set viewdir=$HOME/.vim/views//
 autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent loadview
 
 " au FileType javascript set foldmethod=syntax
+au FileType javascript set foldmethod=indent
 au FileType html set foldmethod=indent
+au FileType xml,xhtml set foldmethod=indent
 
 "competion
 
@@ -91,11 +116,15 @@ vnoremap <C-h> ""y:%s/<C-R>=escape(@", '/\')<CR>//g<Left><Left>
 " }}}
 " Bundles {{{
 filetype off
-"set rtp+=~/.vim/bundle/Vundle.vim
-"call vundle#begin()
-set rtp+=~/vimfiles/bundle/Vundle.vim/
-let path='~/vimfiles/bundle'
-call vundle#begin(path)
+if WINDOWS()
+    set rtp+=~/.vim/bundle/Vundle.vim/
+    let path='~/.vim/bundle'
+    call vundle#begin(path)
+elseif
+    set rtp+=~/.vim/bundle/Vundle.vim
+    call vundle#begin()
+endif
+
 
 Plugin 'gmarik/Vundle.vim'
 
@@ -139,7 +168,7 @@ Plugin 'nelstrom/vim-markdown-folding'
 Plugin 'hoffstein/vim-tsql'
 Plugin 'vim-scripts/dbext.vim'
 Plugin 'vim-scripts/sqlserver.vim'
-" Plugin 'marijnh/tern_for_vim'
+Plugin 'marijnh/tern_for_vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'itspriddle/vim-jquery.git'
 Plugin 'othree/javascript-libraries-syntax.vim'
@@ -155,7 +184,7 @@ Plugin 'chrisbra/csv.vim'
 " Projects {{{
 Plugin 'scrooloose/nerdtree.git'
 Plugin 'kien/ctrlp.vim'
-Plugin 'editorconfig/editorconfig-vim'
+"Plugin 'editorconfig/editorconfig-vim'
 " }}}
 " Other {{{
 Plugin 'Raimondi/delimitMate'
@@ -203,12 +232,16 @@ set background=dark
 set lines=50
 set columns=120
 
-if has("gui_gtk2")
+if LINUX() && has("gui_running")
+    "set guifont=Andale\ Mono\ Regular\ 12,Menlo\ Regular\ 11,Consolas\ Regular\ 12,Courier\ New\ Regular\ 14
 	set guifont=Consolas\ 12,Inconsolata\ 15,Monaco\ 12
-else
-	" set guifont=Consolas\ 12,Inconsolata\ 15,Monaco\ 12
-	" set guifont=Inconsolata\ XL:h12,Inconsolata:h12,Monaco:h12
-end
+elseif OSX() && has("gui_running")
+    "set guifont=Andale\ Mono\ Regular:h12,Menlo\ Regular:h11,Consolas\ Regular:h12,Courier\ New\ Regular:h14
+	set guifont=Consolas\ 12,Inconsolata\ 15,Monaco\ 12
+elseif WINDOWS() && has("gui_running")
+    set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
+endif
+
 set guioptions-=r
 set guioptions-=L
 
@@ -228,10 +261,14 @@ au FileType sqlserver set foldmethod=marker
 
 " }}}
 " NERDTree {{{
+
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 let g:NERDTreeWinSize = 30
 let g:NERDTreeWinPos = "right"
+map <C-e> :NERDTreeToggle<CR>
+map <leader>e :NERDTreeFind<CR>
+nmap <leader>nt :NERDTreeFind<CR>
 
 " }}}
 " Ag {{{
@@ -243,17 +280,29 @@ nmap ,af :AgFile ""<Left>
 nnoremap <silent> K :Ag! <cword><CR>
 
 "}}}
-" Fugitive {{{ 
+" Fugitive {{{
 set previewheight=30
-
+nnoremap <silent> <leader>gs :Gstatus<CR>
+nnoremap <silent> <leader>gd :Gdiff<CR>
+nnoremap <silent> <leader>gc :Gcommit<CR>
+nnoremap <silent> <leader>gb :Gblame<CR>
+nnoremap <silent> <leader>gl :Glog<CR>
+nnoremap <silent> <leader>gp :Git push<CR>
+nnoremap <silent> <leader>gr :Gread<CR>
+nnoremap <silent> <leader>gw :Gwrite<CR>
+nnoremap <silent> <leader>ge :Gedit<CR>
+" Mnemonic _i_nteractive
+nnoremap <silent> <leader>gi :Git add -p %<CR>
+nnoremap <silent> <leader>gg :SignifyToggle<CR>
 " }}}
-
 " Syntastic {{{
+if WINDOWS()
+    let g:syntastic_javascript_jshint_exec='C:\Users\kcs\AppData\Roaming\npm\jshint.cmd'
+endif
 let g:syntastic_javascript_checkers = ['jshint']
 let g:syntastic_auto_loc_list = 1
 
-" }}} 
-
+" }}}
 " Js BEautify {{{
 
 autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
@@ -266,7 +315,6 @@ autocmd FileType javascript vnoremap <buffer>  <c-f> :call RangeJsBeautify()<cr>
 autocmd FileType html vnoremap <buffer> <c-f> :call RangeHtmlBeautify()<cr>
 autocmd FileType css vnoremap <buffer> <c-f> :call RangeCSSBeautify()<cr>
 "}}}
-
 "CtrlP {{{
 let g:ctrlp_custom_ignore = {
     \ 'dir':  '\v[\/](\.(git|hg|svn))|(obj|bower_components|packages|bin|node_modules|dist)$',
@@ -288,9 +336,12 @@ let g:gundo_width = 60
 
 " }}}
 " Tern {{{
-" set omnifunc=syntaxcomplete#Complete
-" let b:ternProjectDir = '~/Documents/Projects/Darkness/Lightness/app'
+set omnifunc=syntaxcomplete#Complete
+
 "}}}
+" Lightline {{{
+
+" }}}
 " FileTypes {{{
 
 
@@ -298,12 +349,11 @@ let g:gundo_width = 60
 " Key mappings {{{
 
 
-nmap <D-N> :NERDTreeToggle<CR>
 
 
 " Command-/ to toggle comments
-map <D-/> :TComment<CR>
-imap <D-/> <Esc>:TComment<CR>i
+map <C-/> :TComment<CR>
+imap <C-/> <Esc>:TComment<CR>i
 
 " Resize windows with arrow keys
 nnoremap <D-Up> <C-w>+
@@ -474,7 +524,7 @@ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" :
 inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y>  neocomplete#close_popup()
-inoremap <expr><C-e>  neocomplete#cancel_popup()
+"inoremap <expr><C-e>  neocomplete#cancel_popup()
 
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -529,8 +579,6 @@ vmap ,{ c{<C-R>"}<ESC>
 
 map ,` ysiw`
 
-" Open the project tree and expose current file in the nerdtree with Ctrl-\
-nnoremap <silent> <C-\> :NERDTreeFind<CR>:vertical res 30<CR>
 
 "Move back and forth through previous and next buffers
 "with ,z and ,x
