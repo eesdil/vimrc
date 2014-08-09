@@ -243,7 +243,7 @@ nmap ,af :AgFile ""<Left>
 nnoremap <silent> K :Ag! <cword><CR>
 
 "}}}
-" Fugitive }}}
+" Fugitive {{{ 
 set previewheight=30
 
 " }}}
