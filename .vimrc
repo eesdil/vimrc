@@ -127,7 +127,7 @@ if WINDOWS()
     set rtp+=~/.vim/bundle/Vundle.vim/
     let path='~/.vim/bundle'
     call vundle#begin(path)
-elseif
+elseif OSX() || LINUX()
     set rtp+=~/.vim/bundle/Vundle.vim
     call vundle#begin()
 endif
