@@ -108,6 +108,13 @@ set smartcase
 set incsearch
 
 set laststatus=2
+" Broken down into easily includeable segments
+" set statusline=%<%f\                     " Filename
+" set statusline+=%w%h%m%r                 " Options
+" set statusline+=%{fugitive#statusline()} " Git Hotness
+" set statusline+=\ [%{&ff}/%Y]            " Filetype
+" set statusline+=\ [%{getcwd()}]          " Current dir
+" set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
 
 set updatetime=400
 
@@ -168,14 +175,22 @@ Plugin 'nelstrom/vim-markdown-folding'
 Plugin 'hoffstein/vim-tsql'
 Plugin 'vim-scripts/dbext.vim'
 Plugin 'vim-scripts/sqlserver.vim'
-Plugin 'marijnh/tern_for_vim'
+Plugin 'vim-scripts/SQLUtilities'
+Plugin 'vim-scripts/SQLComplete.vim'
+Plugin 'vim-scripts/sql.snippets'
+" Plugin 'marijnh/tern_for_vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'itspriddle/vim-jquery.git'
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'maksimr/vim-jsbeautify'
 Plugin 'vim-scripts/SyntaxComplete'
-" Plugin 'vim-scripts/JavaScript-Indent'
 Plugin 'chrisbra/csv.vim'
+"Plugin 'othree/html5.vim'
+Plugin 'gregsexton/MatchTag'
+Plugin 'vim-scripts/visual_studio.vim'
+Plugin 'tsaleh/vim-align'
+
+" Plugin 'vim-scripts/JavaScript-Indent'
 " Plugin 'jelera/vim-javascript-syntax'
 " Plugin 'lukaszb/vim-web-indent'
 " Plugin 'vim-scripts/eclipse.vim'
@@ -212,6 +227,9 @@ Plugin 'amiorin/vim-fenced-code-blocks'
 Plugin 'chrisbra/NrrwRgn'
 Plugin 'godlygeek/tabular'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'spf13/vim-autoclose'
+Plugin 'majutsushi/tagbar'
+Plugin 'bronson/vim-visual-star-search'
 
 " Plugin 'Valloric/YouCompleteMe'
 " Plugin 'Shougo/vimshell.vim'
@@ -226,7 +244,8 @@ filetype plugin indent on
 
 " autocmd BufEnter * colorscheme pencil
 " colorscheme sonofobsidian
-colorscheme pencil
+" colorscheme pencil
+colorscheme monokai
 set background=dark
 
 set lines=50
@@ -260,6 +279,17 @@ au FileType sqlserver set foldmethod=marker
 " autocmd BufEnter *.sql colorscheme sonofobsidian
 
 " }}}
+" Javascript {{{
+let g:javascript_enable_domhtmlcss = 1
+
+" }}}
+
+" esformatter {{{
+nnoremap <silent> <C-f> :%!esformatter<cr>
+vnoremap <silent> <leader>es :! esformatter<CR>
+
+"}}}
+
 " NERDTree {{{
 
 let NERDTreeMinimalUI = 1
@@ -305,15 +335,15 @@ let g:syntastic_auto_loc_list = 1
 " }}}
 " Js BEautify {{{
 
-autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
+"autocmd FileType javascript noremap <buffer>  <c-f> :call JsBeautify()<cr>
 " for html
-autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
+" autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
 " for css or scss
-autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
+" autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
 " for ranges
-autocmd FileType javascript vnoremap <buffer>  <c-f> :call RangeJsBeautify()<cr>
-autocmd FileType html vnoremap <buffer> <c-f> :call RangeHtmlBeautify()<cr>
-autocmd FileType css vnoremap <buffer> <c-f> :call RangeCSSBeautify()<cr>
+" autocmd FileType javascript vnoremap <buffer>  <c-f> :call RangeJsBeautify()<cr>
+" autocmd FileType html vnoremap <buffer> <c-f> :call RangeHtmlBeautify()<cr>
+" autocmd FileType css vnoremap <buffer> <c-f> :call RangeCSSBeautify()<cr>
 "}}}
 "CtrlP {{{
 let g:ctrlp_custom_ignore = {
@@ -340,8 +370,28 @@ set omnifunc=syntaxcomplete#Complete
 
 "}}}
 " Lightline {{{
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'fugitive', 'readonly', 'filepath', 'filename', 'modified' ] ]
+      \ },
+      \ 'component': {
+      \   'readonly': '%{&filetype=="help"?"":&readonly?"RO":""}',
+      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
+      \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+      \ },
+      \ 'component_visible_condition': {
+      \   'readonly': '(&filetype!="help"&& &readonly)',
+      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+      \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+      \ },
+      \ 'separator': { 'left': '|', 'right': '|' },
+      \ 'subseparator': { 'left': '', 'right': '' }
+      \ }
 
 " }}}
+
 " FileTypes {{{
 
 
@@ -352,8 +402,8 @@ set omnifunc=syntaxcomplete#Complete
 
 
 " Command-/ to toggle comments
-map <C-/> :TComment<CR>
-imap <C-/> <Esc>:TComment<CR>i
+map <Leader>c<space> :TComment<CR>
+" imap <C-/> <Esc>:TComment<CR>i
 
 " Resize windows with arrow keys
 nnoremap <D-Up> <C-w>+
@@ -624,5 +674,6 @@ set splitright
 
 let showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
-
+au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
+nmap <Leader>ac <Plug>ToggleAutoCloseMappings
 " }}}
