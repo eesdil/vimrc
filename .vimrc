@@ -151,6 +151,7 @@ Plugin 'noahfrederick/vim-hemisu'
 Plugin 'reedes/vim-colors-pencil'
 Plugin 'Lokaltog/vim-distinguished'
 Plugin 'vim-scripts/Son-of-Obisidian'
+Plugin 'vim-scripts/Visual-Studio'
 
 " }}}
 " Snippet {{{
