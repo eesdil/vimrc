@@ -19,6 +19,10 @@ endfunction
 if WINDOWS()
   "set runtimepath=$HOME/vimfiles,$VIMRUNTIME
   set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME
+
+  " set windows behaviour for win
+  source $VIMRUNTIME/mswin.vim
+  "behave mswin
 endif
 " }}}
 " Basic {{{
@@ -29,7 +33,6 @@ set history=1000                "Store lots of :cmdline history
 set showcmd                     "Show incomplete cmds down the bottom
 set showmode                    "Show current mode down the bottom
 set gcr=a:blinkon0              "Disable cursor blink
-set visualbell                  "No sounds
 set autoread                    "Reload files changed outside vim
 set cursorline                  "highlight the current line
 " set colorcolumn=80
@@ -40,6 +43,13 @@ let mapleader=","
 scriptencoding utf-8
 set encoding=utf-8
 
+" hide menu
+"set guioptions-=m
+set guioptions-=T
+
+" no blibking in gvim
+set noerrorbells visualbell t_vb=
+autocmd GUIEnter * set visualbell t_vb=
 "Swap files
 set noswapfile
 set nobackup
@@ -151,7 +161,7 @@ Plugin 'noahfrederick/vim-hemisu'
 Plugin 'reedes/vim-colors-pencil'
 Plugin 'Lokaltog/vim-distinguished'
 Plugin 'vim-scripts/Son-of-Obisidian'
-Plugin 'vim-scripts/Visual-Studio'
+"Plugin 'vim-scripts/Visual-Studio'
 
 " }}}
 " Snippet {{{
@@ -175,10 +185,10 @@ Plugin 'nelstrom/vim-markdown-preview'
 Plugin 'nelstrom/vim-markdown-folding'
 Plugin 'hoffstein/vim-tsql'
 Plugin 'vim-scripts/dbext.vim'
-Plugin 'vim-scripts/sqlserver.vim'
-Plugin 'vim-scripts/SQLUtilities'
-Plugin 'vim-scripts/SQLComplete.vim'
-Plugin 'vim-scripts/sql.snippets'
+" Plugin 'vim-scripts/sqlserver.vim'
+" Plugin 'vim-scripts/SQLUtilities'
+" Plugin 'vim-scripts/SQLComplete.vim'
+" Plugin 'vim-scripts/sql.snippets'
 " Plugin 'marijnh/tern_for_vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'itspriddle/vim-jquery.git'
@@ -188,7 +198,7 @@ Plugin 'vim-scripts/SyntaxComplete'
 Plugin 'chrisbra/csv.vim'
 "Plugin 'othree/html5.vim'
 Plugin 'gregsexton/MatchTag'
-Plugin 'vim-scripts/visual_studio.vim'
+" Plugin 'vim-scripts/visual_studio.vim'
 Plugin 'tsaleh/vim-align'
 
 " Plugin 'vim-scripts/JavaScript-Indent'
@@ -246,7 +256,7 @@ filetype plugin indent on
 " autocmd BufEnter * colorscheme pencil
 " colorscheme sonofobsidian
 " colorscheme pencil
-colorscheme monokai
+colorscheme molokai
 set background=dark
 
 set lines=50
