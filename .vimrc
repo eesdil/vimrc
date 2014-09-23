@@ -190,6 +190,7 @@ Plugin 'chrisbra/csv.vim'
 Plugin 'gregsexton/MatchTag'
 Plugin 'vim-scripts/visual_studio.vim'
 Plugin 'tsaleh/vim-align'
+Plugin 'PProvost/vim-ps1'
 
 " Plugin 'vim-scripts/JavaScript-Indent'
 " Plugin 'jelera/vim-javascript-syntax'
@@ -227,7 +228,8 @@ Plugin 'tpope/vim-repeat'
 Plugin 'amiorin/vim-fenced-code-blocks'
 Plugin 'chrisbra/NrrwRgn'
 Plugin 'godlygeek/tabular'
-Plugin 'airblade/vim-gitgutter'
+" Plugin 'airblade/vim-gitgutter'
+Plugin 'chrisbra/changesPlugin'
 Plugin 'spf13/vim-autoclose'
 Plugin 'majutsushi/tagbar'
 Plugin 'bronson/vim-visual-star-search'
@@ -390,6 +392,15 @@ let g:lightline = {
       \ 'separator': { 'left': '|', 'right': '|' },
       \ 'subseparator': { 'left': '', 'right': '' }
       \ }
+
+" }}}
+" changesPlugin {{{
+let g:changes_vcs_check = 1
+
+" }}}
+" Power shell plugin {{{
+let g:ps1_nofold_blocks = 1
+let g:ps1_nofold_sig = 1
 
 " }}}
 
