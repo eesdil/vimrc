@@ -233,6 +233,7 @@ Plugin 'chrisbra/changesPlugin'
 Plugin 'spf13/vim-autoclose'
 Plugin 'majutsushi/tagbar'
 Plugin 'bronson/vim-visual-star-search'
+Plugin 'vim-scripts/DirDiff.vim'
 
 " Plugin 'Valloric/YouCompleteMe'
 " Plugin 'Shougo/vimshell.vim'
