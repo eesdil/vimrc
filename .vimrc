@@ -21,7 +21,7 @@ if WINDOWS()
   set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME
 
   " set windows behaviour for win
-  source $VIMRUNTIME/mswin.vim
+  " source $VIMRUNTIME/mswin.vim
   "behave mswin
 endif
 " }}}
@@ -161,7 +161,7 @@ Plugin 'noahfrederick/vim-hemisu'
 Plugin 'reedes/vim-colors-pencil'
 Plugin 'Lokaltog/vim-distinguished'
 Plugin 'vim-scripts/Son-of-Obisidian'
-"Plugin 'vim-scripts/Visual-Studio'
+Plugin 'vim-scripts/Visual-Studio'
 
 " }}}
 " Snippet {{{
@@ -188,7 +188,7 @@ Plugin 'vim-scripts/dbext.vim'
 " Plugin 'vim-scripts/sqlserver.vim'
 " Plugin 'vim-scripts/SQLUtilities'
 " Plugin 'vim-scripts/SQLComplete.vim'
-" Plugin 'vim-scripts/sql.snippets'
+Plugin 'vim-scripts/sql.snippets'
 " Plugin 'marijnh/tern_for_vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'itspriddle/vim-jquery.git'
@@ -198,8 +198,9 @@ Plugin 'vim-scripts/SyntaxComplete'
 Plugin 'chrisbra/csv.vim'
 "Plugin 'othree/html5.vim'
 Plugin 'gregsexton/MatchTag'
-" Plugin 'vim-scripts/visual_studio.vim'
+Plugin 'vim-scripts/visual_studio.vim'
 Plugin 'tsaleh/vim-align'
+Plugin 'PProvost/vim-ps1'
 
 " Plugin 'vim-scripts/JavaScript-Indent'
 " Plugin 'jelera/vim-javascript-syntax'
@@ -210,6 +211,7 @@ Plugin 'tsaleh/vim-align'
 " Projects {{{
 Plugin 'scrooloose/nerdtree.git'
 Plugin 'kien/ctrlp.vim'
+Plugin 'FelikZ/ctrlp-py-matcher'
 "Plugin 'editorconfig/editorconfig-vim'
 " }}}
 " Other {{{
@@ -237,10 +239,12 @@ Plugin 'tpope/vim-repeat'
 Plugin 'amiorin/vim-fenced-code-blocks'
 Plugin 'chrisbra/NrrwRgn'
 Plugin 'godlygeek/tabular'
-Plugin 'airblade/vim-gitgutter'
+" Plugin 'airblade/vim-gitgutter'
+" Plugin 'chrisbra/changesPlugin'
 Plugin 'spf13/vim-autoclose'
 Plugin 'majutsushi/tagbar'
 Plugin 'bronson/vim-visual-star-search'
+Plugin 'vim-scripts/DirDiff.vim'
 
 " Plugin 'Valloric/YouCompleteMe'
 " Plugin 'Shougo/vimshell.vim'
@@ -362,10 +366,34 @@ let g:ctrlp_custom_ignore = {
     \ 'file': '\v\.(exe|so|dll|zip)$',
     \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
     \ }
-let g:ctrlp_map = ',t'
-nnoremap <silent> ,t :CtrlP<CR>
-nnoremap <silent> ,b :CtrlPBuffer<cr>
+
+let g:ctrlp_map = '<c-\>'
+let g:ctrlp_cmd = 'CtrlPMRUFiles'
+
+" nnoremap <silent> ,t :CtrlP<CR>
+" nnoremap <silent> ,m :CtrlPMRUFiles<CR>
+" nnoremap <silent> ,m :CtrlPMixed<CR>
+" nnoremap <silent> ,b :CtrlPBuffer<cr>
 nnoremap <silent> <C-b> :CtrlPBuffer<cr>
+
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
+
+let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+
+" PyMatcher for CtrlP
+if !has('python')
+    echo 'In order to use pymatcher plugin, you need +python compiled vim'
+else
+    let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+endif
+
+let g:ctrlp_lazy_update = 150
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_max_files = 0
+if executable("ag")
+    set grepprg=ag\ --nogroup\ --nocolor
+    let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --ignore ''.git'' --ignore ''.DS_Store'' --ignore ''node_modules'' --hidden -g ""'
+endif
 
 ""}}}
 " gundo {{{
@@ -400,6 +428,14 @@ let g:lightline = {
       \ 'separator': { 'left': '|', 'right': '|' },
       \ 'subseparator': { 'left': '', 'right': '' }
       \ }
+" }}}
+" changesPlugin {{{
+let g:changes_vcs_check = 1
+
+" }}}
+" Power shell plugin {{{
+let g:ps1_nofold_blocks = 1
+let g:ps1_nofold_sig = 1
 
 " }}}
 
@@ -688,3 +724,10 @@ let showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
 nmap <Leader>ac <Plug>ToggleAutoCloseMappings
 " }}}
+
+" for pasting in insert node if it is windows
+if WINDOWS()
+    inoremap <C-v> <C-o>"+p
+    cmap <C-v> <C-r>+
+endif
+
