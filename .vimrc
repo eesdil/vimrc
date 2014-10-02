@@ -185,7 +185,7 @@ Plugin 'nelstrom/vim-markdown-preview'
 Plugin 'nelstrom/vim-markdown-folding'
 Plugin 'hoffstein/vim-tsql'
 Plugin 'vim-scripts/dbext.vim'
-" Plugin 'vim-scripts/sqlserver.vim'
+Plugin 'vim-scripts/sqlserver.vim'
 " Plugin 'vim-scripts/SQLUtilities'
 " Plugin 'vim-scripts/SQLComplete.vim'
 Plugin 'vim-scripts/sql.snippets'
@@ -215,6 +215,8 @@ Plugin 'FelikZ/ctrlp-py-matcher'
 "Plugin 'editorconfig/editorconfig-vim'
 " }}}
 " Other {{{
+Plugin 'vim-scripts/closetag.vim'
+Plugin 'tpope/vim-ragtag'
 Plugin 'Raimondi/delimitMate'
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'airblade/vim-rooter'
@@ -260,7 +262,7 @@ filetype plugin indent on
 " autocmd BufEnter * colorscheme pencil
 " colorscheme sonofobsidian
 " colorscheme pencil
-colorscheme molokai
+colorscheme ir_black
 set background=dark
 
 set lines=50
@@ -339,14 +341,18 @@ nnoremap <silent> <leader>ge :Gedit<CR>
 " Mnemonic _i_nteractive
 nnoremap <silent> <leader>gi :Git add -p %<CR>
 nnoremap <silent> <leader>gg :SignifyToggle<CR>
+nnoremap <silent> <leader>gm :Git log --graph --all --pretty=tformat:"\%C(yellow)\%h\%Creset\%C(cyan)\%C(bold)\%d\%Creset \%C(cyan)(\%cr)\%Creset \%C(green)\%ce\%Creset \%s"'<CR>
 " }}}
 " Syntastic {{{
 if WINDOWS()
     let g:syntastic_javascript_jshint_exec='C:\Users\kcs\AppData\Roaming\npm\jshint.cmd'
 endif
 let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_html_checkers = ['jshint', 'w3']
 let g:syntastic_auto_loc_list = 1
-
+let g:syntastic_mode_map = { 'mode': 'active',
+            \ 'active_filetypes': [],
+            \ 'passive_filetypes': ['coffee'] }
 " }}}
 " Js BEautify {{{
 
@@ -368,7 +374,7 @@ let g:ctrlp_custom_ignore = {
     \ }
 
 let g:ctrlp_map = '<c-\>'
-let g:ctrlp_cmd = 'CtrlPMRUFiles'
+let g:ctrlp_cmd = 'CtrlPMixed'
 
 " nnoremap <silent> ,t :CtrlP<CR>
 " nnoremap <silent> ,m :CtrlPMRUFiles<CR>
@@ -378,7 +384,7 @@ nnoremap <silent> <C-b> :CtrlPBuffer<cr>
 
 let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
 
-let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+" let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
 
 " PyMatcher for CtrlP
 if !has('python')
@@ -390,10 +396,10 @@ endif
 let g:ctrlp_lazy_update = 150
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_max_files = 0
-if executable("ag")
-    set grepprg=ag\ --nogroup\ --nocolor
-    let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --ignore ''.git'' --ignore ''.DS_Store'' --ignore ''node_modules'' --hidden -g ""'
-endif
+" if executable("ag")
+"     set grepprg=ag\ --nogroup\ --nocolor
+"     let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --ignore ''.git'' --ignore ''.DS_Store'' --ignore ''node_modules'' --hidden -g ""'
+" endif
 
 ""}}}
 " gundo {{{
@@ -438,6 +444,10 @@ let g:ps1_nofold_blocks = 1
 let g:ps1_nofold_sig = 1
 
 " }}}
+" matchit {{{
+runtime macros/matchit.vim
+
+"}}}
 
 " FileTypes {{{
 
@@ -451,6 +461,7 @@ let g:ps1_nofold_sig = 1
 " Command-/ to toggle comments
 map <Leader>c<space> :TComment<CR>
 " imap <C-/> <Esc>:TComment<CR>i
+let g:tcomment#replacements_xml={}
 
 " Resize windows with arrow keys
 nnoremap <D-Up> <C-w>+
