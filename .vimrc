@@ -1,3 +1,4 @@
+
 " vim:fdm=marker
 
 set nocompatible
@@ -19,6 +20,10 @@ endfunction
 if WINDOWS()
   "set runtimepath=$HOME/vimfiles,$VIMRUNTIME
   set runtimepath=$HOME/.vim,$VIM/vimfiles,$VIMRUNTIME
+
+  " set windows behaviour for win
+  " source $VIMRUNTIME/mswin.vim
+  "behave mswin
 endif
 " }}}
 " Basic {{{
@@ -29,7 +34,6 @@ set history=1000                "Store lots of :cmdline history
 set showcmd                     "Show incomplete cmds down the bottom
 set showmode                    "Show current mode down the bottom
 set gcr=a:blinkon0              "Disable cursor blink
-set visualbell                  "No sounds
 set autoread                    "Reload files changed outside vim
 set cursorline                  "highlight the current line
 " set colorcolumn=80
@@ -40,6 +44,13 @@ let mapleader=","
 scriptencoding utf-8
 set encoding=utf-8
 
+" hide menu
+"set guioptions-=m
+set guioptions-=T
+
+" no blibking in gvim
+set noerrorbells visualbell t_vb=
+autocmd GUIEnter * set visualbell t_vb=
 "Swap files
 set noswapfile
 set nobackup
@@ -176,8 +187,8 @@ Plugin 'nelstrom/vim-markdown-folding'
 Plugin 'hoffstein/vim-tsql'
 Plugin 'vim-scripts/dbext.vim'
 Plugin 'vim-scripts/sqlserver.vim'
-Plugin 'vim-scripts/SQLUtilities'
-Plugin 'vim-scripts/SQLComplete.vim'
+" Plugin 'vim-scripts/SQLUtilities'
+" Plugin 'vim-scripts/SQLComplete.vim'
 Plugin 'vim-scripts/sql.snippets'
 " Plugin 'marijnh/tern_for_vim'
 Plugin 'pangloss/vim-javascript'
@@ -201,9 +212,12 @@ Plugin 'PProvost/vim-ps1'
 " Projects {{{
 Plugin 'scrooloose/nerdtree.git'
 Plugin 'kien/ctrlp.vim'
+Plugin 'FelikZ/ctrlp-py-matcher'
 "Plugin 'editorconfig/editorconfig-vim'
 " }}}
 " Other {{{
+Plugin 'vim-scripts/closetag.vim'
+Plugin 'tpope/vim-ragtag'
 Plugin 'Raimondi/delimitMate'
 Plugin 'Shougo/neocomplete.vim'
 Plugin 'airblade/vim-rooter'
@@ -229,7 +243,7 @@ Plugin 'amiorin/vim-fenced-code-blocks'
 Plugin 'chrisbra/NrrwRgn'
 Plugin 'godlygeek/tabular'
 " Plugin 'airblade/vim-gitgutter'
-Plugin 'chrisbra/changesPlugin'
+" Plugin 'chrisbra/changesPlugin'
 Plugin 'spf13/vim-autoclose'
 Plugin 'majutsushi/tagbar'
 Plugin 'bronson/vim-visual-star-search'
@@ -249,7 +263,7 @@ filetype plugin indent on
 " autocmd BufEnter * colorscheme pencil
 " colorscheme sonofobsidian
 " colorscheme pencil
-colorscheme monokai
+colorscheme ir_black
 set background=dark
 
 set lines=50
@@ -328,14 +342,18 @@ nnoremap <silent> <leader>ge :Gedit<CR>
 " Mnemonic _i_nteractive
 nnoremap <silent> <leader>gi :Git add -p %<CR>
 nnoremap <silent> <leader>gg :SignifyToggle<CR>
+nnoremap <silent> <leader>gm :Git log --graph --all --pretty=tformat:"\%C(yellow)\%h\%Creset\%C(cyan)\%C(bold)\%d\%Creset \%C(cyan)(\%cr)\%Creset \%C(green)\%ce\%Creset \%s"'<CR>
 " }}}
 " Syntastic {{{
 if WINDOWS()
     let g:syntastic_javascript_jshint_exec='C:\Users\kcs\AppData\Roaming\npm\jshint.cmd'
 endif
 let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_html_checkers = ['jshint', 'w3']
 let g:syntastic_auto_loc_list = 1
-
+let g:syntastic_mode_map = { 'mode': 'active',
+            \ 'active_filetypes': [],
+            \ 'passive_filetypes': ['coffee'] }
 " }}}
 " Js BEautify {{{
 
@@ -355,10 +373,34 @@ let g:ctrlp_custom_ignore = {
     \ 'file': '\v\.(exe|so|dll|zip)$',
     \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
     \ }
-let g:ctrlp_map = ',t'
-nnoremap <silent> ,t :CtrlP<CR>
-nnoremap <silent> ,b :CtrlPBuffer<cr>
+
+let g:ctrlp_map = '<c-\>'
+let g:ctrlp_cmd = 'CtrlPMixed'
+
+" nnoremap <silent> ,t :CtrlP<CR>
+" nnoremap <silent> ,m :CtrlPMRUFiles<CR>
+" nnoremap <silent> ,m :CtrlPMixed<CR>
+" nnoremap <silent> ,b :CtrlPBuffer<cr>
 nnoremap <silent> <C-b> :CtrlPBuffer<cr>
+
+let g:ctrlp_match_window = 'bottom,order:btt,min:1,max:20,results:20'
+
+" let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+
+" PyMatcher for CtrlP
+if !has('python')
+    echo 'In order to use pymatcher plugin, you need +python compiled vim'
+else
+    let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+endif
+
+let g:ctrlp_lazy_update = 150
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_max_files = 0
+" if executable("ag")
+"     set grepprg=ag\ --nogroup\ --nocolor
+"     let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --ignore ''.git'' --ignore ''.DS_Store'' --ignore ''node_modules'' --hidden -g ""'
+" endif
 
 ""}}}
 " gundo {{{
@@ -393,7 +435,6 @@ let g:lightline = {
       \ 'separator': { 'left': '|', 'right': '|' },
       \ 'subseparator': { 'left': '', 'right': '' }
       \ }
-
 " }}}
 " changesPlugin {{{
 let g:changes_vcs_check = 1
@@ -404,6 +445,10 @@ let g:ps1_nofold_blocks = 1
 let g:ps1_nofold_sig = 1
 
 " }}}
+" matchit {{{
+runtime macros/matchit.vim
+
+"}}}
 
 " FileTypes {{{
 
@@ -417,6 +462,7 @@ let g:ps1_nofold_sig = 1
 " Command-/ to toggle comments
 map <Leader>c<space> :TComment<CR>
 " imap <C-/> <Esc>:TComment<CR>i
+let g:tcomment#replacements_xml={}
 
 " Resize windows with arrow keys
 nnoremap <D-Up> <C-w>+
@@ -690,3 +736,10 @@ let showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
 nmap <Leader>ac <Plug>ToggleAutoCloseMappings
 " }}}
+
+" for pasting in insert node if it is windows
+if WINDOWS()
+    inoremap <C-v> <C-o>"+p
+    cmap <C-v> <C-r>+
+endif
+
