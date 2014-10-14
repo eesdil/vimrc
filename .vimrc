@@ -68,7 +68,7 @@ filetype indent on
 
 set list listchars=tab:\ \ ,trail:·
 
-set nowrap       "Don't wrap lines
+set wrap!       "Don't wrap lines
 set linebreak    "Wrap lines at convenient points
 
 set foldnestmax=15
@@ -259,11 +259,13 @@ filetype plugin indent on
 " }}}
 " Appearance {{{
 
+" set background=dark
+set background=light
 " autocmd BufEnter * colorscheme pencil
 " colorscheme sonofobsidian
 " colorscheme pencil
-colorscheme ir_black
-set background=dark
+" colorscheme ir_black
+colorscheme visualstudio
 
 set lines=50
 set columns=120
@@ -731,6 +733,10 @@ set splitright
 " }}}
 
 let showmarks_include = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+let g:dbext_default_profile_darkness = 'type=SQLSRV:user=sa:passwd=ieVaich0%:srvname=.\RIGEL:dbname=Darkness'
+let g:dbext_default_profile_entrance = 'type=SQLSRV:user=sa:passwd=ieVaich0%:srvname=.\RIGEL:dbname=Darkness'
+
 
 au FileType xhtml,xml ru ftplugin/html/autoclosetag.vim
 nmap <Leader>ac <Plug>ToggleAutoCloseMappings
