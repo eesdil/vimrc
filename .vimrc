@@ -38,7 +38,7 @@ set cursorline                  "highlight the current line
 " set colorcolumn=80
 set hidden
 syntax on
-set spell
+set spell!
 let mapleader=","
 scriptencoding utf-8
 set encoding=utf-8
@@ -82,8 +82,8 @@ set viewdir=$HOME/.vim/views//
 autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent loadview
 
-" au FileType javascript set foldmethod=syntax
-au FileType javascript set foldmethod=indent
+au FileType javascript set foldmethod=syntax
+" au FileType javascript set foldmethod=indent
 au FileType html set foldmethod=indent
 au FileType xml,xhtml set foldmethod=indent
 
@@ -187,7 +187,7 @@ Plugin 'hoffstein/vim-tsql'
 Plugin 'vim-scripts/dbext.vim'
 Plugin 'vim-scripts/sqlserver.vim'
 " Plugin 'vim-scripts/SQLUtilities'
-" Plugin 'vim-scripts/SQLComplete.vim'
+Plugin 'vim-scripts/SQLComplete.vim'
 Plugin 'vim-scripts/sql.snippets'
 " Plugin 'marijnh/tern_for_vim'
 Plugin 'pangloss/vim-javascript'
@@ -227,12 +227,15 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-git'
 Plugin 'reedes/vim-wheel'
 Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'xsunsmile/showmarks.git'
+" Plugin 'xsunsmile/showmarks.git'
 Plugin 'tomtom/tcomment_vim.git'
 Plugin 'sjl/gundo.vim'
 Plugin 'skwp/YankRing.vim'
 Plugin 'tpope/vim-surround.git'
-Plugin 'vim-scripts/AutoTag.git'
+" Plugin 'vim-scripts/AutoTag.git'
+Plugin 'xolox/vim-shell'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-easytags'
 Plugin 'vim-scripts/lastpos.vim'
 Plugin 'skwp/vim-easymotion'
 Plugin 'rking/ag.vim'
@@ -247,6 +250,7 @@ Plugin 'spf13/vim-autoclose'
 Plugin 'majutsushi/tagbar'
 Plugin 'bronson/vim-visual-star-search'
 Plugin 'vim-scripts/DirDiff.vim'
+Plugin 'kshenoy/vim-signature'
 
 " Plugin 'Valloric/YouCompleteMe'
 " Plugin 'Shougo/vimshell.vim'
@@ -259,13 +263,14 @@ filetype plugin indent on
 " }}}
 " Appearance {{{
 
-" set background=dark
-set background=light
+set background=dark
+" set background=light
 " autocmd BufEnter * colorscheme pencil
 " colorscheme sonofobsidian
 " colorscheme pencil
 " colorscheme ir_black
-colorscheme visualstudio
+" colorscheme visualstudio
+colorscheme solarized
 
 set lines=50
 set columns=120
@@ -277,7 +282,7 @@ elseif OSX() && has("gui_running")
     "set guifont=Andale\ Mono\ Regular:h12,Menlo\ Regular:h11,Consolas\ Regular:h12,Courier\ New\ Regular:h14
 	set guifont=Consolas\ 12,Inconsolata\ 15,Monaco\ 12
 elseif WINDOWS() && has("gui_running")
-    set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h10,Courier_New:h10
+    set guifont=Andale_Mono:h10,Menlo:h10,Consolas:h9,Courier_New:h10
 endif
 
 set guioptions-=r
@@ -325,8 +330,10 @@ nmap <leader>nt :NERDTreeFind<CR>
 let g:agprg="ag --column --smart-case"
 let g:aghighlight=1
 nmap ,ag :Ag! ""<Left>
+nmap ,al :Ag! -Q ""<Left>
 nmap ,af :AgFile ""<Left>
-nnoremap <silent> K :Ag! <cword><CR>
+nnoremap <silent> K :Ag! -Q <cword><CR>
+vnoremap <silent> K y:Ag! -Q "<C-R>""<CR>
 
 "}}}
 " Fugitive {{{
@@ -354,7 +361,7 @@ let g:syntastic_html_checkers = ['jshint', 'w3']
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_mode_map = { 'mode': 'active',
             \ 'active_filetypes': [],
-            \ 'passive_filetypes': ['coffee'] }
+            \ 'passive_filetypes': ['coffee', 'less'] }
 " }}}
 " Js BEautify {{{
 
@@ -502,9 +509,13 @@ nmap <leader>f9 :set foldlevel=9<CR>
 :vnoremap > >gv
 
 
-nmap ,u :GundoToggle<CR>
+nmap <leader>u :GundoToggle<CR>
 " }}}
 
+" vimdiff {{{
+set diffopt+=iwhite
+set diffexpr=""
+" }}
 " Not ordered yet {{{
 
 " mail for mutt {{{
@@ -657,43 +668,43 @@ let g:markdown_fenced_languages = ['coffee', 'css', 'erb=eruby', 'javascript', '
 " Open the Ag command and place the cursor into the quotes
 
 " ,# Surround a word with #{ruby interpolation}
-map ,# ysiw#
-vmap ,# c#{<C-R>"}<ESC>
+map <leader># ysiw#
+vmap <leader># c#{<C-R>"}<ESC>
 
-" ," Surround a word with "quotes"
-map ," ysiw"
-vmap ," c"<C-R>""<ESC>
+" <leader>" Surround a word with "quotes"
+map <leader>" ysiw"
+vmap <leader>" c"<C-R>""<ESC>
 
 " ,' Surround a word with 'single quotes'
-map ,' ysiw'
-vmap ,' c'<C-R>"'<ESC>
+map <leader>' ysiw'
+vmap <leader>' c'<C-R>"'<ESC>
 
-" ,) or ,( Surround a word with (parens)
+" <leader>) or <leader>( Surround a word with (parens)
 " The difference is in whether a space is put in
-map ,( ysiw(
-map ,) ysiw)
-vmap ,( c( <C-R>" )<ESC>
-vmap ,) c(<C-R>")<ESC>
+map <leader>( ysiw(
+map <leader>) ysiw)
+vmap <leader>( c( <C-R>" )<ESC>
+vmap <leader>) c(<C-R>")<ESC>
 
-" ,[ Surround a word with [brackets]
-map ,] ysiw]
-map ,[ ysiw[
-vmap ,[ c[ <C-R>" ]<ESC>
-vmap ,] c[<C-R>"]<ESC>
+" <leader>[ Surround a word with [brackets]
+map <leader>] ysiw]
+map <leader>[ ysiw[
+vmap <leader>[ c[ <C-R>" ]<ESC>
+vmap <leader>] c[<C-R>"]<ESC>
 
-" ,{ Surround a word with {braces}
-map ,} ysiw}
-map ,{ ysiw{
-vmap ,} c{ <C-R>" }<ESC>
-vmap ,{ c{<C-R>"}<ESC>
+" <leader>{ Surround a word with {braces}
+map <leader>} ysiw}
+map <leader>{ ysiw{
+vmap <leader>} c{ <C-R>" }<ESC>
+vmap <leader>{ c{<C-R>"}<ESC>
 
-map ,` ysiw`
+map <leader>` ysiw`
 
 
 "Move back and forth through previous and next buffers
 "with ,z and ,x
-nnoremap <silent> ,z :bp<CR>
-nnoremap <silent> ,x :bn<CR>
+nnoremap <silent> <leader>z :bp<CR>
+nnoremap <silent> <leader>x :bn<CR>
 
 " Create window splits easier. The default
 " way is Ctrl-w,v and Ctrl-w,s. I remap
@@ -718,7 +729,7 @@ function! <SID>StripTrailingWhitespaces()
     call cursor(l, c)
 endfunction
 command! StripTrailingWhitespaces call <SID>StripTrailingWhitespaces()
-nmap ,w :StripTrailingWhitespaces<CR>
+nmap <leader>w :StripTrailingWhitespaces<CR>
 
 " Make 0 go to the first character rather than the beginning
 " of the line. When we're programming, we're almost always
