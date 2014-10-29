@@ -24,6 +24,8 @@ if WINDOWS()
   " source $VIMRUNTIME/mswin.vim
   "behave mswin
 endif
+
+
 " }}}
 " Basic {{{
 set number                      "Line numbers are good
@@ -186,24 +188,20 @@ Plugin 'nelstrom/vim-markdown-folding'
 Plugin 'hoffstein/vim-tsql'
 Plugin 'vim-scripts/dbext.vim'
 Plugin 'vim-scripts/sqlserver.vim'
-" Plugin 'vim-scripts/SQLUtilities'
-Plugin 'vim-scripts/SQLComplete.vim'
 Plugin 'vim-scripts/sql.snippets'
 " Plugin 'marijnh/tern_for_vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'itspriddle/vim-jquery.git'
 Plugin 'othree/javascript-libraries-syntax.vim'
 Plugin 'maksimr/vim-jsbeautify'
-Plugin 'vim-scripts/SyntaxComplete'
 Plugin 'chrisbra/csv.vim'
-"Plugin 'othree/html5.vim'
 Plugin 'gregsexton/MatchTag'
 Plugin 'vim-scripts/visual_studio.vim'
 Plugin 'tsaleh/vim-align'
 Plugin 'PProvost/vim-ps1'
-
-" Plugin 'vim-scripts/JavaScript-Indent'
-" Plugin 'jelera/vim-javascript-syntax'
+Plugin 'vim-scripts/JavaScript-Indent'
+Plugin 'jelera/vim-javascript-syntax'
+"Plugin 'othree/html5.vim'
 " Plugin 'lukaszb/vim-web-indent'
 " Plugin 'vim-scripts/eclipse.vim'
 " Plugin 'jtratner/vim-flavored-markdown.git'
@@ -227,12 +225,10 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-git'
 Plugin 'reedes/vim-wheel'
 Plugin 'nathanaelkane/vim-indent-guides'
-" Plugin 'xsunsmile/showmarks.git'
 Plugin 'tomtom/tcomment_vim.git'
 Plugin 'sjl/gundo.vim'
 Plugin 'skwp/YankRing.vim'
 Plugin 'tpope/vim-surround.git'
-" Plugin 'vim-scripts/AutoTag.git'
 Plugin 'xolox/vim-shell'
 Plugin 'xolox/vim-misc'
 Plugin 'xolox/vim-easytags'
@@ -244,14 +240,16 @@ Plugin 'tpope/vim-repeat'
 Plugin 'amiorin/vim-fenced-code-blocks'
 Plugin 'chrisbra/NrrwRgn'
 Plugin 'godlygeek/tabular'
-" Plugin 'airblade/vim-gitgutter'
-" Plugin 'chrisbra/changesPlugin'
 Plugin 'spf13/vim-autoclose'
 Plugin 'majutsushi/tagbar'
 Plugin 'bronson/vim-visual-star-search'
 Plugin 'vim-scripts/DirDiff.vim'
 Plugin 'kshenoy/vim-signature'
 
+" Plugin 'xsunsmile/showmarks.git'
+" Plugin 'vim-scripts/AutoTag.git'
+" Plugin 'airblade/vim-gitgutter'
+" Plugin 'chrisbra/changesPlugin'
 " Plugin 'Valloric/YouCompleteMe'
 " Plugin 'Shougo/vimshell.vim'
 " Plugin 'Shougo/vimproc.vim'
@@ -302,9 +300,13 @@ au BufNewFile,BufRead *.sql setlocal foldmethod=marker
 au FileType sqlserver set foldmethod=marker
 " autocmd BufEnter *.sql colorscheme sonofobsidian
 
+let g:ftplugin_sql_omni_key = '<C-C>'
+
 " }}}
 " Javascript {{{
 let g:javascript_enable_domhtmlcss = 1
+
+let g:used_javascript_libs = 'underscore,angularjs,angularui,jquery,jasmine'
 
 " }}}
 
@@ -420,7 +422,7 @@ let g:gundo_width = 60
 
 " }}}
 " Tern {{{
-set omnifunc=syntaxcomplete#Complete
+" set omnifunc=syntaxcomplete#Complete
 
 "}}}
 " Lightline {{{
@@ -455,6 +457,16 @@ let g:ps1_nofold_sig = 1
 " }}}
 " matchit {{{
 runtime macros/matchit.vim
+
+"}}}
+
+" SyntaxComplete {{{
+if has("autocmd") && exists("+omnifunc")
+autocmd Filetype *
+    \	if &omnifunc == "" |
+    \	setlocal omnifunc=syntaxcomplete#Complete |
+    \	endif
+    endif
 
 "}}}
 
@@ -574,6 +586,7 @@ au FileType email set completefunc=MailcompleteC
 au FileType markdown set nu!
 
 " Neo Complete Cache {{{
+
 "Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
@@ -585,7 +598,7 @@ let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#max_list = 8
 
 " Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 3
+let g:neocomplete#sources#syntax#min_keyword_length = 2
 let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
 inoremap <TAB> <C-n>
@@ -653,6 +666,7 @@ autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType sqlserver setlocal omnifunc=sqlcomplete#CompleteSQL
 
 " Enable heavy omni completion.
 if !exists('g:neocomplete#sources#omni#input_patterns')
