@@ -111,7 +111,13 @@ set scrolloff=8         "Start scrolling when we're 8 lines away from margins
 set sidescrolloff=15
 set sidescroll=1
 
-set clipboard+=unnamed
+if has('unnamedplus')  " When possible use + register for copy-paste
+    set clipboard=unnamed,unnamedplus
+else         " On mac and Windows, use *
+    register for copy-paste
+    set clipboard=unnamed
+endif
+
 set hlsearch
 set ignorecase
 set smartcase
@@ -277,7 +283,7 @@ set columns=120
 
 if LINUX() && has("gui_running")
     "set guifont=Andale\ Mono\ Regular\ 12,Menlo\ Regular\ 11,Consolas\ Regular\ 12,Courier\ New\ Regular\ 14
-	set guifont=Consolas\ 12,Inconsolata\ 15,Monaco\ 12
+	set guifont=Droid\ Sans\ Mono,Consolas\ 12,Inconsolata\ 15,Monaco\ 12
 elseif OSX() && has("gui_running")
     "set guifont=Andale\ Mono\ Regular:h12,Menlo\ Regular:h11,Consolas\ Regular:h12,Courier\ New\ Regular:h14
 	set guifont=Consolas\ 12,Inconsolata\ 15,Monaco\ 12
@@ -297,8 +303,8 @@ au BufRead,BufNewFile *.md set filetype=markdown
 " }}}
 " MS SQL {{{
 let g:sql_type_default = "sqlserver"
-au BufNewFile,BufRead *.sql setlocal filetype=sqlserver
-au BufNewFile,BufRead *.sql setlocal foldmethod=marker
+au BufNewFile,BufRead *.sql,*.SQL setlocal filetype=sqlserver
+au BufNewFile,BufRead *.sql,*.SQL setlocal foldmethod=marker
 au FileType sqlserver set foldmethod=marker
 " autocmd BufEnter *.sql colorscheme sonofobsidian
 
