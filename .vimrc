@@ -748,6 +748,10 @@ let g:gundo_right = 1
 let g:gundo_width = 60
 
 " }}}
+" Tern {{{
+" set omnifunc=syntaxcomplete#Complete
+
+"}}}
 " Lightline {{{
 " let g:lightline = {
 "             \ 'colorscheme': 'wombat',
