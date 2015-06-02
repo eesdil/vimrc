@@ -52,6 +52,7 @@ filetype off
 " NeoBundle 'gmarik/Vundle.vim'
 
 " colorscheme {{{
+NeoBundle 'eesdil/vim-themes'
 NeoBundle 'Lokaltog/vim-distinguished'
 NeoBundle 'baeuml/summerfruit256.vim'
 NeoBundle 'chrishunt/color-schemes'
@@ -70,18 +71,19 @@ NeoBundle 'vim-scripts/Son-of-Obisidian'
 NeoBundle 'vim-scripts/Visual-Studio'
 NeoBundle 'w0ng/vim-hybrid'
 NeoBundle 'zenorocha/dracula-theme'
+NeoBundle 'nelstrom/vim-mac-classic-theme'
 
 " }}}
 " Snippet {{{
-NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundle 'eesdil/bootstrap-snippets'
-NeoBundle 'honza/vim-snippets'
-NeoBundle 'matthewsimo/angular-vim-snippets'
-" NeoBundle 'MarcWeber/vim-addon-mw-utils'
-" NeoBundle 'SirVer/ultisnips'
-" NeoBundle 'garbas/vim-snipmate.git'
+" NeoBundle 'Shougo/neosnippet'
+" NeoBundle 'Shougo/neosnippet-snippets'
 " NeoBundle 'msanders/snipmate.vim'
+" NeoBundle 'MarcWeber/vim-addon-mw-utils'
+NeoBundle 'SirVer/ultisnips'
+NeoBundle 'honza/vim-snippets'
+NeoBundle 'eesdil/bootstrap-snippets'
+NeoBundle 'matthewsimo/angular-vim-snippets'
+" NeoBundle 'garbas/vim-snipmate.git'
 " NeoBundle 'tomtom/tlib_vim'
 " }}}
 " Languages {{{
@@ -99,7 +101,7 @@ NeoBundle 'ap/vim-css-color'
 NeoBundle 'burnettk/vim-angular'
 NeoBundle 'chrisbra/csv.vim'
 NeoBundle 'claco/jasmine.vim'
-NeoBundle 'clausreinke/typescript-tools'
+" NeoBundle 'clausreinke/typescript-tools.vim'
 NeoBundle 'gregsexton/MatchTag'
 NeoBundle 'groenewege/vim-less.git'
 NeoBundle 'hail2u/vim-css3-syntax'
@@ -107,7 +109,7 @@ NeoBundle 'hoffstein/vim-tsql'
 NeoBundle 'jason0x43/vim-js-indent'
 NeoBundle 'kchmck/vim-coffee-script'
 NeoBundle 'leafgarland/typescript-vim'
-NeoBundle 'maksimr/vim-jsbeautify'
+" NeoBundle 'maksimr/vim-jsbeautify'
 NeoBundle 'nelstrom/vim-markdown-folding'
 NeoBundle 'nelstrom/vim-markdown-preview'
 NeoBundle 'othree/javascript-libraries-syntax.vim'
@@ -118,6 +120,10 @@ NeoBundle 'tsaleh/vim-align'
 NeoBundle 'vim-scripts/dbext.vim'
 NeoBundle 'vim-scripts/sql.snippets'
 NeoBundle 'vim-scripts/sqlserver.vim'
+NeoBundle 'vim-scripts/SQLUtilities'
+NeoBundle 'vim-scripts/javacomplete'
+NeoBundle 'hsanson/vim-android'
+NeoBundle 'tfnico/vim-gradle'
 
 " NeoBundle 'jtratner/vim-flavored-markdown.git'
 " NeoBundle 'lukaszb/vim-web-indent'
@@ -136,6 +142,8 @@ NeoBundle 'scrooloose/nerdtree.git'
 " NeoBundle 'c0r73x/vimdir.vim'
 " NeoBundle 'mhinz/vim-signify'
 " NeoBundle 'xolox/vim-easytags'
+NeoBundle 'Valloric/MatchTagAlways'
+" NeoBundle 'Valloric/YouCompleteMe'
 NeoBundle 'Raimondi/delimitMate'
 NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/neomru.vim'
@@ -155,6 +163,7 @@ NeoBundle 'kshenoy/vim-signature'
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'mattn/gist-vim'
 NeoBundle 'millermedeiros/esformatter'
+NeoBundle 'Chiel92/vim-autoformat'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'reedes/vim-wheel'
 NeoBundle 'rking/ag.vim'
@@ -177,6 +186,7 @@ NeoBundle 'vim-scripts/closetag.vim'
 NeoBundle 'vim-scripts/lastpos.vim'
 NeoBundle 'xolox/vim-misc'
 NeoBundle 'xolox/vim-shell'
+NeoBundle 'Yggdroot/indentLine'
 NeoBundle 'Shougo/vimproc.vim', {
 \ 'build' : {
 \     'windows' : 'tools\\update-dll-mingw',
@@ -187,8 +197,8 @@ NeoBundle 'Shougo/vimproc.vim', {
 \    },
 \ }
 
+NeoBundle 'Quramy/tsuquyomi'
 " NeoBundle 'Shougo/vimshell.vim'
-" NeoBundle 'Valloric/YouCompleteMe'
 " NeoBundle 'airblade/vim-gitgutter'
 " NeoBundle 'chrisbra/changesNeoBundle'
 " NeoBundle 'mklabs/vim-issues'
@@ -260,7 +270,7 @@ set foldnestmax=15
 set foldenable
 set foldminlines=2
 "set foldlevel=20
-set foldlevelstart=20
+set foldlevelstart=2
 
 " save view after leaving window and restore it
 set viewdir=$HOME/.vim/views//
@@ -323,18 +333,21 @@ vnoremap <C-h> ""y:%s/<C-R>=escape(@", '/\')<CR>//g<Left><Left>
 " Appearance {{{
 
 " set background=dark
-set background=light
+" set background=light
 " autocmd BufEnter * colorscheme pencil
 " colorscheme sonofobsidian
 " colorscheme pencil
 " colorscheme ir_black
 " colorscheme visualstudio
-colorscheme solarized
-" colorscheme molokai
+" colorscheme solarized
+" colorscheme sublime
 " colorscheme luna
+" colorscheme mac_classic
+" colorscheme VS
+colorscheme xoria256
 
 set lines=50
-set columns=120
+" set columns=120
 
 if LINUX() && has("gui_running")
     "set guifont=Andale\ Mono\ Regular\ 12,Menlo\ Regular\ 11,Consolas\ Regular\ 12,Courier\ New\ Regular\ 14
@@ -342,7 +355,9 @@ if LINUX() && has("gui_running")
 elseif OSX() && has("gui_running")
     "set guifont=Andale\ Mono\ Regular:h12,Menlo\ Regular:h11,Consolas\ Regular:h12,Courier\ New\ Regular:h14
     " set guifont=Consolas\ 12,Inconsolata\ 15,Monaco\ 12
-    set guifont=Literation\ Mono\ Powerline\ Plus\ Nerd\ File\ Types:h12
+    " set guifont=Consolas:h12
+    set guifont=Inconsolata\ XL:h11
+    " set guifont=Literation\ Mono\ Powerline\ Plus\ Nerd\ File\ Types:h12
 
 elseif WINDOWS() && has("gui_running")
     set guifont=Consolas\ for\ Powerline:h13,Andale_Mono:h10,Menlo:h10,Consolas:h9,Courier_New:h10
@@ -361,8 +376,9 @@ au BufRead,BufNewFile *.md set filetype=markdown
 " MS SQL {{{
 let g:sql_type_default = "sqlserver"
 au BufNewFile,BufRead *.sql,*.SQL setlocal filetype=sqlserver
-au BufNewFile,BufRead *.sql,*.SQL setlocal foldmethod=marker
-au FileType sqlserver set foldmethod=marker
+" au BufNewFile,BufRead *.sql,*.SQL setlocal foldmethod=marker
+" au FileType sqlserver set foldmethod=marker
+au FileType sqlserver set foldmethod=indent
 " autocmd BufEnter *.sql colorscheme sonofobsidian
 
 let g:ftplugin_sql_omni_key = '<C-C>'
@@ -374,7 +390,44 @@ let g:javascript_enable_domhtmlcss = 1
 let g:used_javascript_libs = 'underscore,angularjs,angularui,jquery,jasmine'
 
 " }}}
+" Tern {{{
+" set omnifunc=syntaxcomplete#Complete
 
+"}}}
+" TypeScript {{{
+
+" let g:js_indent_logging = 1
+let g:typescript_compiler_options = '-t ES5'
+
+" if WINDOWS()
+"     set rtp+=C:/Apps/typescript-tools/
+" else
+"     set rtp+=/usr/local/lib/node_modules/typescript-tools/
+" endif
+
+autocmd BufRead,BufNewFile *.ts setlocal filetype=typescript
+autocmd FileType typescript setlocal foldmethod=indent
+" autocmd FileType typescript call TSSkeymap()
+" autocmd FileType typescript setlocal updatetime=1000
+" autocmd CursorHold,CursorMoved *.ts :checktime
+" autocmd CursorHold *.ts :TsuquyomiGeterr
+" autocmd BufWritePost *.ts :silent Make
+
+" tsuquyomi
+autocmd FileType typescript setlocal completeopt+=menu,preview
+"set ballooneval
+"autocmd FileType typescript setlocal ballonexpr=tsuquyomi#ballonexpr()
+
+" for vimproc
+" let s:system = neobundle#is_installed('vimproc') ? 'vimproc#system_bg' : 'system'
+" let s:system = 'vimproc#system_bg'
+" let s:system = 'system'
+" autocmd BufWritePost *.ts :call {s:system}('tsc -t ES5 ' . expand('%'))
+" au BufRead,BufNewFile *.ts setlocal foldmethod=indent
+" autocmd QuickFixCmdPost [^l]* nested botright cwindow
+" autocmd QuickFixCmdPost    l* nested botright lwindow
+
+" }}}"
 " less {{{
 
 au BufRead,BufNewFile *.less setlocal filetype=less
@@ -382,37 +435,14 @@ au BufRead,BufNewFile *.less setlocal foldmethod=indent
 au FileType less set foldmethod=indent
 
 " }}}
-
-" TypeScript {{{
-
-let g:js_indent_logging = 1
-let g:typescript_compiler_options = '-t ES5'
-
-" let s:system = neobundle#is_installed('vimproc') ? 'vimproc#system_bg' : 'system'
-" let s:system = 'vimproc#system_bg'
-let s:system = 'system'
-
-au BufRead,BufNewFile *.ts setlocal filetype=typescript
-" au BufRead,BufNewFile *.ts setlocal foldmethod=indent
-" au FileType typescript setlocal foldmethod=indent
-
-if WINDOWS()
-    set rtp+=C:/Apps/typescript-tools/
-else
-    set rtp+=/usr/local/lib/node_modules/typescript-tools/
+" Java {{{
+if filereadable(glob('./.vimrc.local'))
+    so ./.vimrc.local
 endif
 
-autocmd FileType typescript call TSSkeymap()
-
-autocmd CursorHold,CursorMoved *.ts :checktime
-" autocmd BufWritePost *.ts :call {s:system}('tsc -t ES5 ' . expand('%'))
-autocmd BufWritePost *.ts :silent Make
-" autocmd QuickFixCmdPost [^l]* nested botright cwindow
-" autocmd QuickFixCmdPost    l* nested botright lwindow
-autocmd FileType typescript setlocal updatetime=50
-
-" }}}"
-
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
+autocmd FileType java setlocal completefunc=javacomplete#CompleteParamsInfo
+"}}}
 " rainbow_parentheses {{{
 let g:rbpt_colorpairs = [
     \ ['brown',       'RoyalBlue3'],
@@ -442,15 +472,6 @@ au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
 " }}}
-
-" esformatter {{{
-" autocmd FileType javascript noremap <silent> <C-f> :%!esformatter<cr>
-" autocmd FileType javascript noremap <leader>es :! esformatter<CR>
-"
-" autocmd FileType typescript noremap <silent> <C-f> :%!tsfmt<cr>
-" autocmd FileType typescript noremap <leader>es :! tsfmt<CR>
-"}}}
-
 " NERDTree {{{
 
 let NERDTreeMinimalUI = 1
@@ -491,7 +512,6 @@ nmap <leader>nt :NERDTreeFind<CR>
 " call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
 " source: https://github.com/scrooloose/nerdtree/issues/201#issuecomment-9954740
 " }}}
-
 " Ag {{{
 " let g:AgSmartCase = 1
 " let g:ag_prg="ag --vimgrep"
@@ -536,21 +556,65 @@ let g:syntastic_mode_map = { 'mode': 'active',
             \ 'passive_filetypes': ['coffee', 'typescript', 'html'] }
             " \ 'passive_filetypes': ['coffee', 'less', 'html'] }
 " }}}
+" webdev icons {{{
+let g:webdevicons_enable_airline_tabline = 0
+let g:webdevicons_enable_airline_statusline = 0
+" }}}
+" Autoformat {{{
+
+" A wrapper function to restore the cursor position, window position,
+" and last search after running a command.
+function! Preserve(command)
+  " Save the last search
+  let last_search=@/
+  " Save the current cursor position
+  let save_cursor = getpos(".")
+  " Save the window position
+  normal H
+  let save_window = getpos(".")
+  call setpos('.', save_cursor)
+  mkview
+ 
+  " Do the business:
+  execute a:command
+ 
+  " Restore the last_search
+  let @/=last_search
+  " Restore the window position
+  call setpos('.', save_window)
+  normal zt
+  " Restore the cursor position
+  call setpos('.', save_cursor)
+endfunction
+
+autocmd FileType javascript,typescript noremap <silent> <c-f> :call Preserve("%! js-beautify --type \"js\"  -f -")<CR>
+autocmd FileType html,xml noremap <silent> <c-f> :call Preserve("%! js-beautify --type \"html\"  -f -")<CR>
+autocmd FileType css,less noremap <silent> <c-f> :call Preserve("%! js-beautify --type \"css\"  -f -")<CR>
+
+" noremap <c-f> :Autoformat<CR><CR>
+" let g:formatprg_typescript = "js-beautify"
+"}}}
+" esformatter {{{
+" autocmd FileType javascript noremap <silent> <C-f> :%!esformatter<cr>
+" autocmd FileType javascript noremap <leader>es :! esformatter<CR>
+"
+" autocmd FileType typescript noremap <silent> <C-f> :%!tsfmt<cr>
+" autocmd FileType typescript noremap <leader>es :! tsfmt<CR>
+"}}}
 " Js BEautify {{{
 
-" js and ts
-autocmd FileType javascript,typescript noremap <buffer>  <c-f> :call JsBeautify()<cr>
-autocmd FileType javascript,typescript vnoremap <buffer>  <c-f> :call RangeJsBeautify()<cr>
-" for html
-autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
-autocmd FileType html vnoremap <buffer> <c-f> :call RangeHtmlBeautify()<cr>
-" for css or scss
-autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
-autocmd FileType css vnoremap <buffer> <c-f> :call RangeCSSBeautify()<cr>
+" " js and ts
+" autocmd FileType javascript,typescript noremap <buffer>  <c-f> :call JsBeautify()<cr>
+" autocmd FileType javascript,typescript vnoremap <buffer>  <c-f> :call RangeJsBeautify()<cr>
+" " for html
+" autocmd FileType html noremap <buffer> <c-f> :call HtmlBeautify()<cr>
+" autocmd FileType html vnoremap <buffer> <c-f> :call RangeHtmlBeautify()<cr>
+" " for css or scss
+" autocmd FileType css noremap <buffer> <c-f> :call CSSBeautify()<cr>
+" autocmd FileType css vnoremap <buffer> <c-f> :call RangeCSSBeautify()<cr>
 
 "}}}
-
-"CtrlP {{{
+" CtrlP {{{
 
 let g:ctrlp_custom_ignore = {
             \ 'dir':  '\v[\/](\.(git|hg|svn))|(obj|bower_components|packages|bin|node_modules|dist|mobile|mobile_packaged)$',
@@ -607,10 +671,6 @@ endif
 " endif
 
 ""}}}
-
-" signify {{{
-" match solarized colors
-" }}}
 " unite {{{{
 
 " nnoremap <C-l> :Unite buffer file file_mru<CR>
@@ -677,6 +737,9 @@ call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
             \ 'max_candidates', 20)
 
 "}}}
+" signify {{{
+" match solarized colors
+" }}}
 " gundo {{{
 " open on the right so as not to compete with the nerdtree
 let g:gundo_right = 1
@@ -685,33 +748,88 @@ let g:gundo_right = 1
 let g:gundo_width = 60
 
 " }}}
-" Tern {{{
-" set omnifunc=syntaxcomplete#Complete
-
-"}}}
 " Lightline {{{
+" let g:lightline = {
+"             \ 'colorscheme': 'wombat',
+"             \ 'active': {
+"             \   'left': [ [ 'mode', 'paste' ],
+"             \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+"             \ },
+"             \ 'component': {
+"             \   'readonly': '%{&filetype=="help"?"":&readonly?"⭤":""}',
+"             \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
+"             \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
+"             \ },
+"             \ 'component_visible_condition': {
+"             \   'readonly': '(&filetype!="help"&& &readonly)',
+"             \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+"             \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+"             \ },
+"             \ 'separator': { 'left': '⮀', 'right': '⮂' },
+"             \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+"             \ }
+
 let g:lightline = {
-            \ 'colorscheme': 'wombat',
-            \ 'active': {
-            \   'left': [ [ 'mode', 'paste' ],
-            \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
-            \ },
-            \ 'component': {
-            \   'readonly': '%{&filetype=="help"?"":&readonly?"RO":""}',
-            \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
-            \   'fugitive': '%{exists("*fugitive#head")?fugitive#head():""}'
-            \ },
-            \ 'component_visible_condition': {
-            \   'readonly': '(&filetype!="help"&& &readonly)',
-            \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
-            \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
-            \ },
-            \ 'separator': { 'left': '|', 'right': '|' },
-            \ 'subseparator': { 'left': '', 'right': '' }
-            \ }
-" }}}
-" Airline {{{
-" let g:airline#extensions#tabline#enabled = 0
+      \ 'colorscheme': 'wombat',
+      \ 'mode_map': { 'c': 'NORMAL' },
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+      \ },
+      \ 'component_function': {
+      \   'modified': 'MyModified',
+      \   'readonly': 'MyReadonly',
+      \   'fugitive': 'MyFugitive',
+      \   'filename': 'MyFilename',
+      \   'fileformat': 'MyFileformat',
+      \   'filetype': 'MyFiletype',
+      \   'fileencoding': 'MyFileencoding',
+      \   'mode': 'MyMode',
+      \ },
+      \ 'separator': { 'left': '⮀', 'right': '⮂' },
+      \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+      \ }
+
+function! MyModified()
+    return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! MyReadonly()
+    return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '⭤' : ''
+endfunction
+
+function! MyFilename()
+    return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+                \ (&ft == 'vimfiler' ? vimfiler#get_status_string() : 
+                \  &ft == 'unite' ? unite#get_status_string() : 
+                \  &ft == 'vimshell' ? vimshell#get_status_string() :
+                \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+                \ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
+
+function! MyFugitive()
+    if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
+        let _ = fugitive#head()
+        return strlen(_) ? '⭠ '._ : ''
+    endif
+    return ''
+endfunction
+
+function! MyFileformat()
+    return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! MyFiletype()
+    return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! MyFileencoding()
+    return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function! MyMode()
+    return winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
 " }}}
 " changesNeoBundle {{{
 let g:changes_vcs_check = 1
@@ -741,20 +859,21 @@ if has("autocmd") && exists("+omnifunc")
 endif
 
 "}}}
-
-" FileTypes {{{
-
-
-"}}}
 " Key mappings {{{
 
 
 
 
-" Command-/ to toggle comments
+" tcomment {{{
 map <Leader>c<space> :TComment<CR>
-" imap <C-/> <Esc>:TComment<CR>i
+map <D-/> :TComment<CR>
+imap <D-/> <Esc>:TComment<CR>i
 let g:tcomment#replacements_xml={}
+
+call tcomment#DefineType('java', '// %s')
+call tcomment#DefineType('typescript', '// %s')
+call tcomment#DefineType('sqlserver', '-- %s')
+" }}}
 
 " Resize windows with arrow keys
 nnoremap <D-Up> <C-w>+
@@ -795,14 +914,12 @@ nmap <leader>f9 :set foldlevel=9<CR>
 
 nmap <leader>u :GundoToggle<CR>
 " }}}
-
 " vimdiff {{{
 
 set diffopt+=iwhite
 set diffexpr=""
 
 " }}}
-
 " buffer close {{{
 
 " Delete buffer while keeping window layout (don't close buffer's windows).
@@ -937,98 +1054,112 @@ au FileType email set completefunc=MailcompleteC
 "
 au FileType markdown set nu!
 
+
+" YouCompleteMe {{{
+
+" }}}"
+
+" Ultisnip {{{
+
+" for youcompleteme
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
+" }}}"
+
 " Neo Complete Cache {{{
 
 "Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
-" Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
-" Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
-" Use smartcase.
-let g:neocomplete#enable_smart_case = 1
+ " Disable AutoComplPop.
+ let g:acp_enableAtStartup = 0
+ " Use neocomplete.
+ let g:neocomplete#enable_at_startup = 1
+ " Use smartcase.
+ let g:neocomplete#enable_smart_case = 1
 
-let g:neocomplete#max_list = 8
+ let g:neocomplete#max_list = 8
 
-" Set minimum syntax keyword length.
-let g:neocomplete#sources#syntax#min_keyword_length = 2
-let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+ " Set minimum syntax keyword length.
+ let g:neocomplete#sources#syntax#min_keyword_length = 2
+ let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
 
-inoremap <TAB> <C-n>
+ inoremap <TAB> <C-n>
 
-" Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-            \ 'default' : '',
-            \ 'vimshell' : $HOME.'/.vimshell_hist',
-            \ 'scheme' : $HOME.'/.gosh_completions'
-            \ }
+ " Define dictionary.
+ let g:neocomplete#sources#dictionary#dictionaries = {
+             \ 'default' : '',
+             \ 'vimshell' : $HOME.'/.vimshell_hist',
+             \ 'scheme' : $HOME.'/.gosh_completions'
+             \ }
 
-" Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-    let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+ " Define keyword.
+ if !exists('g:neocomplete#keyword_patterns')
+     let g:neocomplete#keyword_patterns = {}
+ endif
+ let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
-" neo snippet {{{
-" NeoBundle key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
+ " neo snippet {{{
+ " NeoBundle key-mappings.
+ imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+ smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+ xmap <C-k>     <Plug>(neosnippet_expand_target)
 
-" SuperTab like snippets behavior.
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-            \ "\<Plug>(neosnippet_expand_or_jump)"
-            \: pumvisible() ? "\<C-n>" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-            \ "\<Plug>(neosnippet_expand_or_jump)"
-            \: "\<TAB>"
+ " SuperTab like snippets behavior.
+ imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+             \ "\<Plug>(neosnippet_expand_or_jump)"
+             \: pumvisible() ? "\<C-n>" : "\<TAB>"
+ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+             \ "\<Plug>(neosnippet_expand_or_jump)"
+             \: "\<TAB>"
 
 let g:neosnippet#enable_snipmate_compatibility = 1
 
 " For snippet_complete marker.
 if has('conceal')
-    set conceallevel=2 concealcursor=i
+   set conceallevel=2 concealcursor=i
 endif
 " }}}
 
-" Recommended key-mappings.
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function()
-    return neocomplete#close_popup() . "\<CR>"
-    " For no inserting <CR> key.
-    "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
-endfunction
+ " Recommended key-mappings.
+ " <CR>: close popup and save indent.
+ inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+ function! s:my_cr_function()
+     return neocomplete#close_popup() . "\<CR>"
+     " For no inserting <CR> key.
+     "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+ endfunction
 
-" <TAB>: completion.
-function! s:check_back_space() "{{{
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-endfunction   "}}}
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" :
-            \ <SID>check_back_space() ? "\<TAB>" :
-            \ neocomplete#start_manual_complete()
+ " <TAB>: completion.
+ function! s:check_back_space() "{{{
+     let col = col('.') - 1
+     return !col || getline('.')[col - 1]  =~ '\s'
+ endfunction   "}}}
+ inoremap <expr><TAB>  pumvisible() ? "\<C-n>" :
+             \ <SID>check_back_space() ? "\<TAB>" :
+             \ neocomplete#start_manual_complete()
 
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-inoremap <expr><C-y>  neocomplete#close_popup()
-"inoremap <expr><C-e>  neocomplete#cancel_popup()
+ " <C-h>, <BS>: close popup and delete backword char.
+ inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+ inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+ inoremap <expr><C-y>  neocomplete#close_popup()
+ "inoremap <expr><C-e>  neocomplete#cancel_popup()
 
-" Enable omni completion.
+ " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+" autocmd FileType typescript setlocal omnifunc=javascriptcomplete#CompleteJS
 " autocmd FileType typescript setlocal omnifunc=TSScompleteFunc
-" autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd FileType sqlserver setlocal omnifunc=sqlcomplete#CompleteSQL
-
-" Enable heavy omni completion.
-if !exists('g:neocomplete#sources#omni#input_patterns')
-    let g:neocomplete#sources#omni#input_patterns = {}
-endif
-" let g:neocomplete#sources#omni#input_patterns.typescript = '[^. *\t]\.\w*\|\h\w*::'
-let g:neocomplete#sources#omni#input_patterns.javascript = '[^. *\t]\.\w*\|\h\w*::'
+"
+" " Enable heavy omni completion.
+"if !exists('g:neocomplete#sources#omni#input_patterns')
+"    let g:neocomplete#sources#omni#input_patterns = {}
+"endif
+"let g:neocomplete#sources#omni#input_patterns.typescript = '[^. *\t]\.\w*\|\h\w*::'
+" let g:neocomplete#sources#omni#input_patterns.javascript = '[^. *\t]\.\w*\|\h\w*::'
 
 " }}}
 
@@ -1126,7 +1257,7 @@ if WINDOWS()
 endif
 
 "start TSS for the project
-nmap <F8> :TSSstart _references.ts<CR>
+" nmap <F8> :TSSstart _references.ts<CR>
 
 fu! CustomFoldText()
     "get first non-blank line
@@ -1152,3 +1283,25 @@ endf
 set foldtext=CustomFoldText()
 setlocal foldtext=CustomFoldText()
 
+" Highlight all instances of word under cursor, when idle.
+" Useful when studying strange source code.
+" Type z/ to toggle highlighting on/off.
+nnoremap z/ :if AutoHighlightToggle()<Bar>set hls<Bar>endif<CR>
+function! AutoHighlightToggle()
+  let @/ = ''
+  if exists('#auto_highlight')
+    au! auto_highlight
+    augroup! auto_highlight
+    setl updatetime=3000
+    echo 'Highlight current word: off'
+    return 0
+  else
+    augroup auto_highlight
+      au!
+      au CursorHold * let @/ = '\V\<'.escape(expand('<cword>'), '\').'\>'
+    augroup end
+    setl updatetime=400
+    echo 'Highlight current word: ON'
+    return 1
+  endif
+endfunction
