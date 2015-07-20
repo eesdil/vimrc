@@ -11,6 +11,11 @@ silent function! WINDOWS()
     return  (has('win16') || has('win32') || has('win64'))
 endfunction
 " }}}
+"
+silent function! Neovim()
+    return has('nvim')
+endfunction
+
 " Windows Compatible {{{
 " On Windows, also use '.vim' instead of 'vimfiles'; this makes synchronization
 " across (heterogeneous) systems easier.
@@ -27,193 +32,163 @@ if has('vim_starting')
    if &compatible
      set nocompatible               " Be iMproved
    endif
-
-   set runtimepath+=~/.vim/bundle/neobundle.vim/
  endif
 
-call neobundle#begin(expand('~/.vim/bundle/'))
-
-" Let NeoBundle manage NeoBundle
-NeoBundleFetch 'Shougo/neobundle.vim'
-
+call plug#begin('~/.vim/plugged')
 
 " Bundles {{{
 filetype off
-" if WINDOWS()
-"     set rtp+=~/.vim/bundle/Vundle.vim/
-"     let path='~/.vim/bundle'
-"     call vundle#begin(path)
-" elseif OSX() || LINUX()
-"     set rtp+=~/.vim/bundle/Vundle.vim
-"     call vundle#begin()
-" endif
-
-
-" NeoBundle 'gmarik/Vundle.vim'
 
 " colorscheme {{{
-NeoBundle 'eesdil/vim-themes'
-NeoBundle 'Lokaltog/vim-distinguished'
-NeoBundle 'baeuml/summerfruit256.vim'
-NeoBundle 'chrishunt/color-schemes'
-NeoBundle 'chriskempson/vim-tomorrow-theme'
-NeoBundle 'duythinht/inori'
-NeoBundle 'endel/vim-github-colorscheme'
-NeoBundle 'flazz/vim-colorschemes'
-NeoBundle 'moll/vim-bbye'
-NeoBundle 'noahfrederick/vim-hemisu'
-NeoBundle 'reedes/vim-colors-pencil'
-NeoBundle 'sickill/vim-monokai'
-NeoBundle 'sjl/badwolf'
-NeoBundle 'therubymug/vim-pyte'
-NeoBundle 'tomasr/molokai'
-NeoBundle 'vim-scripts/Son-of-Obisidian'
-NeoBundle 'vim-scripts/Visual-Studio'
-NeoBundle 'w0ng/vim-hybrid'
-NeoBundle 'zenorocha/dracula-theme'
-NeoBundle 'nelstrom/vim-mac-classic-theme'
+Plug 'eesdil/vim-themes'
+Plug 'Lokaltog/vim-distinguished'
+Plug 'baeuml/summerfruit256.vim'
+Plug 'chrishunt/color-schemes'
+Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'duythinht/inori'
+Plug 'endel/vim-github-colorscheme'
+Plug 'flazz/vim-colorschemes'
+Plug 'moll/vim-bbye'
+Plug 'noahfrederick/vim-hemisu'
+Plug 'reedes/vim-colors-pencil'
+Plug 'sickill/vim-monokai'
+Plug 'sjl/badwolf'
+Plug 'therubymug/vim-pyte'
+Plug 'tomasr/molokai'
+Plug 'vim-scripts/Son-of-Obisidian'
+Plug 'vim-scripts/Visual-Studio'
+Plug 'w0ng/vim-hybrid'
+Plug 'zenorocha/dracula-theme'
+Plug 'nelstrom/vim-mac-classic-theme'
 
 " }}}
 " Snippet {{{
-" NeoBundle 'Shougo/neosnippet'
-" NeoBundle 'Shougo/neosnippet-snippets'
-" NeoBundle 'msanders/snipmate.vim'
-" NeoBundle 'MarcWeber/vim-addon-mw-utils'
-NeoBundle 'SirVer/ultisnips'
-NeoBundle 'honza/vim-snippets'
-NeoBundle 'eesdil/bootstrap-snippets'
-NeoBundle 'matthewsimo/angular-vim-snippets'
-" NeoBundle 'garbas/vim-snipmate.git'
-" NeoBundle 'tomtom/tlib_vim'
+" Plug 'Shougo/neosnippet'
+" Plug 'Shougo/neosnippet-snippets'
+" Plug 'msanders/snipmate.vim'
+" Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'eesdil/bootstrap-snippets'
+Plug 'matthewsimo/angular-vim-snippets'
+" Plug 'garbas/vim-snipmate.git'
+" Plug 'tomtom/tlib_vim'
 " }}}
 " Languages {{{
-" NeoBundle 'itspriddle/vim-jquery.git'
-" NeoBundle 'jelera/vim-javascript-syntax'
-" NeoBundle 'marijnh/tern_for_vim'
-" NeoBundle 'skammer/vim-css-color'
-" NeoBundle 'vim-scripts/JavaScript-Indent'
-" NeoBundle 'vim-scripts/OOP-javascript-indentation'
-" NeoBundle 'vim-scripts/Simple-Javascript-Indenter'
-" NeoBundle 'vim-scripts/visual_studio.vim'
-NeoBundle 'OrangeT/vim-csharp'
-NeoBundle 'PProvost/vim-ps1'
-NeoBundle 'ap/vim-css-color'
-NeoBundle 'burnettk/vim-angular'
-NeoBundle 'chrisbra/csv.vim'
-NeoBundle 'claco/jasmine.vim'
-" NeoBundle 'clausreinke/typescript-tools.vim'
-NeoBundle 'gregsexton/MatchTag'
-NeoBundle 'groenewege/vim-less.git'
-NeoBundle 'hail2u/vim-css3-syntax'
-NeoBundle 'hoffstein/vim-tsql'
-NeoBundle 'jason0x43/vim-js-indent'
-NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'leafgarland/typescript-vim'
-" NeoBundle 'maksimr/vim-jsbeautify'
-NeoBundle 'nelstrom/vim-markdown-folding'
-NeoBundle 'nelstrom/vim-markdown-preview'
-NeoBundle 'othree/javascript-libraries-syntax.vim'
-NeoBundle 'pangloss/vim-javascript'
-NeoBundle 'scrooloose/syntastic.git'
-NeoBundle 'tpope/vim-markdown'
-NeoBundle 'tsaleh/vim-align'
-NeoBundle 'vim-scripts/dbext.vim'
-NeoBundle 'vim-scripts/sql.snippets'
-NeoBundle 'vim-scripts/sqlserver.vim'
-NeoBundle 'vim-scripts/SQLUtilities'
-NeoBundle 'vim-scripts/javacomplete'
-NeoBundle 'hsanson/vim-android'
-NeoBundle 'tfnico/vim-gradle'
+" Plug 'itspriddle/vim-jquery.git'
+" Plug 'jelera/vim-javascript-syntax'
+" Plug 'marijnh/tern_for_vim'
+" Plug 'skammer/vim-css-color'
+" Plug 'vim-scripts/JavaScript-Indent'
+" Plug 'vim-scripts/OOP-javascript-indentation'
+" Plug 'vim-scripts/Simple-Javascript-Indenter'
+" Plug 'vim-scripts/visual_studio.vim'
+Plug 'OrangeT/vim-csharp'
+Plug 'PProvost/vim-ps1'
+Plug 'ap/vim-css-color'
+Plug 'burnettk/vim-angular'
+Plug 'chrisbra/csv.vim'
+Plug 'claco/jasmine.vim'
+" Plug 'clausreinke/typescript-tools.vim'
+Plug 'gregsexton/MatchTag'
+Plug 'groenewege/vim-less'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'hoffstein/vim-tsql'
+Plug 'jason0x43/vim-js-indent'
+Plug 'kchmck/vim-coffee-script'
+Plug 'leafgarland/typescript-vim'
+" Plug 'maksimr/vim-jsbeautify'
+Plug 'nelstrom/vim-markdown-folding'
+Plug 'nelstrom/vim-markdown-preview'
+Plug 'othree/javascript-libraries-syntax.vim'
+Plug 'pangloss/vim-javascript'
+Plug 'scrooloose/syntastic'
+Plug 'tpope/vim-markdown'
+Plug 'tsaleh/vim-align'
+Plug 'vim-scripts/dbext.vim'
+Plug 'vim-scripts/sql.snippets'
+Plug 'vim-scripts/sqlserver.vim'
+Plug 'vim-scripts/SQLUtilities'
+Plug 'vim-scripts/javacomplete'
+Plug 'hsanson/vim-android'
+Plug 'tfnico/vim-gradle'
 
-" NeoBundle 'jtratner/vim-flavored-markdown.git'
-" NeoBundle 'lukaszb/vim-web-indent'
-" NeoBundle 'vim-scripts/eclipse.vim'
-" NeoBundle 'othree/html5.vim'
+" Plug 'jtratner/vim-flavored-markdown.git'
+" Plug 'lukaszb/vim-web-indent'
+" Plug 'vim-scripts/eclipse.vim'
+" Plug 'othree/html5.vim'
 " }}}
 " Projects {{{
-NeoBundle 'FelikZ/ctrlp-py-matcher'
-NeoBundle 'Xuyuanp/nerdtree-git-plugin'
-NeoBundle 'editorconfig/editorconfig-vim'
-NeoBundle 'kien/ctrlp.vim'
-NeoBundle 'scrooloose/nerdtree.git'
+Plug 'FelikZ/ctrlp-py-matcher'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'editorconfig/editorconfig-vim'
+"Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'scrooloose/nerdtree'
+" Plug 'xolox/vim-session'
 " }}}
 " Other {{{
-" NeoBundle 'bling/vim-airline'
-" NeoBundle 'c0r73x/vimdir.vim'
-" NeoBundle 'mhinz/vim-signify'
-" NeoBundle 'xolox/vim-easytags'
-NeoBundle 'Valloric/MatchTagAlways'
-" NeoBundle 'Valloric/YouCompleteMe'
-NeoBundle 'Raimondi/delimitMate'
-NeoBundle 'Shougo/neocomplete.vim'
-NeoBundle 'Shougo/neomru.vim'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'airblade/vim-rooter'
-NeoBundle 'amiorin/vim-fenced-code-blocks'
-NeoBundle 'bronson/vim-visual-star-search'
-NeoBundle 'chrisbra/NrrwRgn'
-NeoBundle 'godlygeek/tabular'
-NeoBundle 'gregsexton/gitv'
-NeoBundle 'haya14busa/incsearch.vim'
-NeoBundle 'idanarye/vim-merginal'
-NeoBundle 'itchyny/lightline.vim'
-NeoBundle 'kablamo/vim-git-log'
-NeoBundle 'kien/rainbow_parentheses.vim'
-NeoBundle 'kshenoy/vim-signature'
-NeoBundle 'majutsushi/tagbar'
-NeoBundle 'mattn/gist-vim'
-NeoBundle 'millermedeiros/esformatter'
-NeoBundle 'Chiel92/vim-autoformat'
-NeoBundle 'nathanaelkane/vim-indent-guides'
-NeoBundle 'reedes/vim-wheel'
-NeoBundle 'rking/ag.vim'
-NeoBundle 'ryanoasis/vim-webdevicons'
-NeoBundle 'sjl/gundo.vim'
-NeoBundle 'skwp/YankRing.vim'
-NeoBundle 'skwp/vim-easymotion'
-NeoBundle 'spf13/vim-autoclose'
-NeoBundle 'tommcdo/vim-exchange'
-NeoBundle 'tomtom/tcomment_vim.git'
-NeoBundle 'tpope/vim-dispatch'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'tpope/vim-git'
-NeoBundle 'tpope/vim-ragtag'
-NeoBundle 'tpope/vim-repeat'
-NeoBundle 'tpope/vim-surround.git'
-NeoBundle 'trapd00r/vim-syntax-vidir-ls'
-NeoBundle 'vim-scripts/DirDiff.vim'
-NeoBundle 'vim-scripts/closetag.vim'
-NeoBundle 'vim-scripts/lastpos.vim'
-NeoBundle 'xolox/vim-misc'
-NeoBundle 'xolox/vim-shell'
-NeoBundle 'Yggdroot/indentLine'
-NeoBundle 'Shougo/vimproc.vim', {
-\ 'build' : {
-\     'windows' : 'tools\\update-dll-mingw',
-\     'cygwin' : 'make -f make_cygwin.mak',
-\     'mac' : 'make -f make_mac.mak',
-\     'linux' : 'make',
-\     'unix' : 'gmake',
-\    },
-\ }
-
-NeoBundle 'Quramy/tsuquyomi'
-" NeoBundle 'Shougo/vimshell.vim'
-" NeoBundle 'airblade/vim-gitgutter'
-" NeoBundle 'chrisbra/changesNeoBundle'
-" NeoBundle 'mklabs/vim-issues'
-" NeoBundle 'vim-scripts/AutoTag.git'
-" NeoBundle 'vim-scripts/IndexedSearch'
-" NeoBundle 'xsunsmile/showmarks.git'
+" Plug 'bling/vim-airline'
+" Plug 'c0r73x/vimdir.vim'
+" Plug 'mhinz/vim-signify'
+" Plug 'xolox/vim-easytags'
+Plug 'Valloric/MatchTagAlways'
+" Plug 'Valloric/YouCompleteMe'
+Plug 'Raimondi/delimitMate'
+Plug 'Shougo/neocomplete.vim'
+Plug 'Shougo/neomru.vim'
+Plug 'Shougo/unite.vim'
+Plug 'airblade/vim-rooter'
+Plug 'amiorin/vim-fenced-code-blocks'
+Plug 'bronson/vim-visual-star-search'
+Plug 'chrisbra/NrrwRgn'
+Plug 'godlygeek/tabular'
+Plug 'gregsexton/gitv'
+Plug 'haya14busa/incsearch.vim'
+Plug 'idanarye/vim-merginal'
+Plug 'itchyny/lightline.vim'
+Plug 'kablamo/vim-git-log'
+Plug 'kien/rainbow_parentheses.vim'
+Plug 'kshenoy/vim-signature'
+Plug 'majutsushi/tagbar'
+Plug 'mattn/gist-vim'
+Plug 'millermedeiros/esformatter'
+Plug 'Chiel92/vim-autoformat'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'reedes/vim-wheel'
+Plug 'rking/ag.vim'
+" Plug 'ryanoasis/vim-webdevicons'
+Plug 'sjl/gundo.vim'
+Plug 'skwp/YankRing.vim'
+Plug 'skwp/vim-easymotion'
+Plug 'spf13/vim-autoclose'
+Plug 'tommcdo/vim-exchange'
+Plug 'tomtom/tcomment_vim'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-git'
+Plug 'tpope/vim-ragtag'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'trapd00r/vim-syntax-vidir-ls'
+Plug 'vim-scripts/DirDiff.vim'
+Plug 'vim-scripts/closetag.vim'
+Plug 'vim-scripts/lastpos.vim'
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-shell'
+Plug 'Yggdroot/indentLine'
+Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+Plug 'Quramy/tsuquyomi'
+" Plug 'Shougo/vimshell.vim'
+" Plug 'airblade/vim-gitgutter'
+" Plug 'chrisbra/changesNeoBundle'
+" Plug 'mklabs/vim-issues'
+" Plug 'vim-scripts/AutoTag.git'
+" Plug 'vim-scripts/IndexedSearch'
+" Plug 'xsunsmile/showmarks.git'
 " }}}
 
-" call vundle#end()
-" }}}
-
-
-call neobundle#end()
-NeoBundleCheck
-
+call plug#end()
 " }}}
 " Basic {{{
 set number                      "Line numbers are good
@@ -273,7 +248,11 @@ set foldminlines=2
 set foldlevelstart=2
 
 " save view after leaving window and restore it
-set viewdir=$HOME/.vim/views//
+if Neovim()
+    set viewdir=$HOME/.nvim/views//
+else
+    set viewdir=$HOME/.vim/views//
+endif
 autocmd BufWinLeave *.* mkview
 autocmd BufWinEnter *.* silent loadview
 
@@ -301,7 +280,7 @@ set wildignore+=log/**
 set wildignore+=tmp/**
 set wildignore+=*.png,*.jpg,*.gif
 " set wildignore+=*.js,*.js.map
-set wildignore+=*.css
+" set wildignore+=*.css
 
 set wildignore+=*Lightness/scripts/**
 set wildignore+=*.vbproj
@@ -356,8 +335,9 @@ elseif OSX() && has("gui_running")
     "set guifont=Andale\ Mono\ Regular:h12,Menlo\ Regular:h11,Consolas\ Regular:h12,Courier\ New\ Regular:h14
     " set guifont=Consolas\ 12,Inconsolata\ 15,Monaco\ 12
     " set guifont=Consolas:h12
-    set guifont=Inconsolata\ XL:h11
+    "set guifont=Inconsolata\ XL:h11
     " set guifont=Literation\ Mono\ Powerline\ Plus\ Nerd\ File\ Types:h12
+    set guifont=Inconsolata\ for\ Powerline\ Plus\ Nerd\ File\ Types\ Plus\ Pomicons:h13
 
 elseif WINDOWS() && has("gui_running")
     set guifont=Consolas\ for\ Powerline:h13,Andale_Mono:h10,Menlo:h10,Consolas:h9,Courier_New:h10
@@ -397,7 +377,7 @@ let g:used_javascript_libs = 'underscore,angularjs,angularui,jquery,jasmine'
 " TypeScript {{{
 
 " let g:js_indent_logging = 1
-let g:typescript_compiler_options = '-t ES5'
+let g:typescript_compiler_options = '-t ES5 --noResolve'
 
 " if WINDOWS()
 "     set rtp+=C:/Apps/typescript-tools/
@@ -416,13 +396,15 @@ autocmd FileType typescript setlocal foldmethod=indent
 " tsuquyomi
 autocmd FileType typescript setlocal completeopt+=menu,preview
 "set ballooneval
-"autocmd FileType typescript setlocal ballonexpr=tsuquyomi#ballonexpr()
+" autocmd FileType typescript setlocal ballonexpr=tsuquyomi#ballonexpr()
 
 " for vimproc
 " let s:system = neobundle#is_installed('vimproc') ? 'vimproc#system_bg' : 'system'
+" set runtimepath+=~/.vim/plugged/vimproc.vim
 " let s:system = 'vimproc#system_bg'
+"let s:system = 'vimproc#system'
 " let s:system = 'system'
-" autocmd BufWritePost *.ts :call {s:system}('tsc -t ES5 ' . expand('%'))
+" autocmd BufWritePost *.ts :call {s:system}('tsc -t ES5 --noResolve ' . expand('%') . '&')
 " au BufRead,BufNewFile *.ts setlocal foldmethod=indent
 " autocmd QuickFixCmdPost [^l]* nested botright cwindow
 " autocmd QuickFixCmdPost    l* nested botright lwindow
@@ -492,25 +474,29 @@ map <leader>e :NERDTreeFind<CR>
 nmap <leader>nt :NERDTreeFind<CR>
 
 " NERDTress File highlighting
-" function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
-"     exec 'autocmd filetype nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
-"     exec 'autocmd filetype nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
-" endfunction
-"
-" call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
-" call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
-" call NERDTreeHighlightFile('md', 'blue', 'none', 'blue', '#151515')
-" call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
-" call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
-" call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
-" call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
-" call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
-" call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
-" call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
-" call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
-" call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
-" call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
-" source: https://github.com/scrooloose/nerdtree/issues/201#issuecomment-9954740
+function! NERDTreeHighlightFile(extension, fg, bg, guifg, guibg)
+exec 'autocmd FileType nerdtree highlight ' . a:extension .' ctermbg='. a:bg .' ctermfg='. a:fg .' guibg='. a:guibg .' guifg='. a:guifg
+exec 'autocmd FileType nerdtree syn match ' . a:extension .' #^\s\+.*'. a:extension .'$#'
+endfunction
+
+call NERDTreeHighlightFile('jade', 'green', 'none', 'green', '#151515')
+call NERDTreeHighlightFile('ini', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', '#151515')
+call NERDTreeHighlightFile('yml', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('config', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('conf', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('json', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('html', 'yellow', 'none', 'yellow', '#151515')
+call NERDTreeHighlightFile('styl', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
+call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
+call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
+call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
+call NERDTreeHighlightFile('ds_store', 'Gray', 'none', '#686868', '#151515')
+call NERDTreeHighlightFile('gitconfig', 'Gray', 'none', '#686868', '#151515')
+call NERDTreeHighlightFile('gitignore', 'Gray', 'none', '#686868', '#151515')
+call NERDTreeHighlightFile('bashrc', 'Gray', 'none', '#686868', '#151515')
+call NERDTreeHighlightFile('bashprofile', 'Gray', 'none', '#686868', '#151515')
 " }}}
 " Ag {{{
 " let g:AgSmartCase = 1
@@ -559,6 +545,7 @@ let g:syntastic_mode_map = { 'mode': 'active',
 " webdev icons {{{
 let g:webdevicons_enable_airline_tabline = 0
 let g:webdevicons_enable_airline_statusline = 0
+let g:webdevicons_enable_ctrlp = 0
 " }}}
 " Autoformat {{{
 
@@ -617,7 +604,7 @@ autocmd FileType css,less noremap <silent> <c-f> :call Preserve("%! js-beautify 
 " CtrlP {{{
 
 let g:ctrlp_custom_ignore = {
-            \ 'dir':  '\v[\/](\.(git|hg|svn))|(obj|bower_components|packages|bin|node_modules|dist|mobile|mobile_packaged)$',
+            \ 'dir':  '\v[\/](\.(git|hg|svn))|(obj|bower_components|packages|bin|node_modules|dist|mobile_packaged)$',
             \ 'file': '\v\.(exe|so|dll|zip|css|js|js\.map)$',
             \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
             \ }
@@ -1073,80 +1060,87 @@ let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 " Neo Complete Cache {{{
 
-"Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
- " Disable AutoComplPop.
- let g:acp_enableAtStartup = 0
- " Use neocomplete.
- let g:neocomplete#enable_at_startup = 1
- " Use smartcase.
- let g:neocomplete#enable_smart_case = 1
-
- let g:neocomplete#max_list = 8
-
- " Set minimum syntax keyword length.
- let g:neocomplete#sources#syntax#min_keyword_length = 2
- let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
- inoremap <TAB> <C-n>
-
- " Define dictionary.
- let g:neocomplete#sources#dictionary#dictionaries = {
-             \ 'default' : '',
-             \ 'vimshell' : $HOME.'/.vimshell_hist',
-             \ 'scheme' : $HOME.'/.gosh_completions'
-             \ }
-
- " Define keyword.
- if !exists('g:neocomplete#keyword_patterns')
-     let g:neocomplete#keyword_patterns = {}
- endif
- let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
- " neo snippet {{{
- " NeoBundle key-mappings.
- imap <C-k>     <Plug>(neosnippet_expand_or_jump)
- smap <C-k>     <Plug>(neosnippet_expand_or_jump)
- xmap <C-k>     <Plug>(neosnippet_expand_target)
-
- " SuperTab like snippets behavior.
- imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-             \ "\<Plug>(neosnippet_expand_or_jump)"
-             \: pumvisible() ? "\<C-n>" : "\<TAB>"
- smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-             \ "\<Plug>(neosnippet_expand_or_jump)"
-             \: "\<TAB>"
-
-let g:neosnippet#enable_snipmate_compatibility = 1
-
-" For snippet_complete marker.
-if has('conceal')
-   set conceallevel=2 concealcursor=i
+if Neovim()
+    let g:deoplete#enable_at_startup = 1
 endif
-" }}}
 
- " Recommended key-mappings.
- " <CR>: close popup and save indent.
- inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
- function! s:my_cr_function()
-     return neocomplete#close_popup() . "\<CR>"
-     " For no inserting <CR> key.
-     "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
- endfunction
+if !Neovim()
 
- " <TAB>: completion.
- function! s:check_back_space() "{{{
-     let col = col('.') - 1
-     return !col || getline('.')[col - 1]  =~ '\s'
- endfunction   "}}}
- inoremap <expr><TAB>  pumvisible() ? "\<C-n>" :
-             \ <SID>check_back_space() ? "\<TAB>" :
-             \ neocomplete#start_manual_complete()
+    "Note: This option must set it in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
+     " Disable AutoComplPop.
+     let g:acp_enableAtStartup = 0
+     " Use neocomplete.
+     let g:neocomplete#enable_at_startup = 1
+     " Use smartcase.
+     let g:neocomplete#enable_smart_case = 1
 
- " <C-h>, <BS>: close popup and delete backword char.
- inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
- inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
- inoremap <expr><C-y>  neocomplete#close_popup()
- "inoremap <expr><C-e>  neocomplete#cancel_popup()
+     let g:neocomplete#max_list = 8
+
+     " Set minimum syntax keyword length.
+     let g:neocomplete#sources#syntax#min_keyword_length = 2
+     let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+     inoremap <TAB> <C-n>
+
+     " Define dictionary.
+     let g:neocomplete#sources#dictionary#dictionaries = {
+                 \ 'default' : '',
+                 \ 'vimshell' : $HOME.'/.vimshell_hist',
+                 \ 'scheme' : $HOME.'/.gosh_completions'
+                 \ }
+
+     " Define keyword.
+     if !exists('g:neocomplete#keyword_patterns')
+         let g:neocomplete#keyword_patterns = {}
+     endif
+     let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+     " neo snippet {{{
+     " NeoBundle key-mappings.
+     imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+     smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+     xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+     " SuperTab like snippets behavior.
+     imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+                 \ "\<Plug>(neosnippet_expand_or_jump)"
+                 \: pumvisible() ? "\<C-n>" : "\<TAB>"
+     smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+                 \ "\<Plug>(neosnippet_expand_or_jump)"
+                 \: "\<TAB>"
+
+    let g:neosnippet#enable_snipmate_compatibility = 1
+
+    " For snippet_complete marker.
+    if has('conceal')
+       set conceallevel=2 concealcursor=i
+    endif
+    " }}}
+
+     " Recommended key-mappings.
+     " <CR>: close popup and save indent.
+     inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+     function! s:my_cr_function()
+         return neocomplete#close_popup() . "\<CR>"
+         " For no inserting <CR> key.
+         "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+     endfunction
+
+     " <TAB>: completion.
+     function! s:check_back_space() "{{{
+         let col = col('.') - 1
+         return !col || getline('.')[col - 1]  =~ '\s'
+     endfunction   "}}}
+     inoremap <expr><TAB>  pumvisible() ? "\<C-n>" :
+                 \ <SID>check_back_space() ? "\<TAB>" :
+                 \ neocomplete#start_manual_complete()
+
+     " <C-h>, <BS>: close popup and delete backword char.
+     inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+     inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+     inoremap <expr><C-y>  neocomplete#close_popup()
+     "inoremap <expr><C-e>  neocomplete#cancel_popup()
+ endif
 
  " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
